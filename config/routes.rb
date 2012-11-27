@@ -1,4 +1,6 @@
 Reposado::Application.routes.draw do
+  root :to => "users#index"
+  # root :to => 'index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
