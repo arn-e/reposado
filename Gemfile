@@ -6,8 +6,12 @@ gem 'rails', '3.2.9'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'sqlite3'
 
+
 group :development, :test do
+  gem 'shoulda'
   gem 'rspec-rails'
+  gem 'quiet_assets'
+  gem 'thin'
 end
 
 group :test do
