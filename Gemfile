@@ -8,7 +8,7 @@ gem 'sqlite3'
 
 group :test do
   gem 'capybara', '1.1.2'
-  gem 'factory_girl_rails'
+  gem 'database_cleaner'
 end
 
 group :development, :test do
@@ -16,6 +16,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'quiet_assets'
   gem 'thin'
+  gem 'faker'
+  gem 'factory_girl_rails'
 end
 
 

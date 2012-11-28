@@ -5,9 +5,6 @@ a snapshot of community engagement for open source repos
 == TO DO
 11/28/12
 
-- figure out where to put logic for querying API, parsing and processing data
--- request feedback from staff
-
 - write tests/code for querying API
 - write tests/code for parsing data
 - write tests/code for processing data
