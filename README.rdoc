@@ -1,3 +1,19 @@
 == REPOSADO
 
 a snapshot of community engagement for open source repos
+
+== TO DO
+11/28/12
+
+- figure out where to put logic for querying API, parsing and processing data
+-- request feedback from staff
+
+- write tests/code for querying API
+- write tests/code for parsing data
+- write tests/code for processing data
+
+- write integration tests for viewing results
+- code for results view and partials (HTML/CSS/ERB/JS)
+- code for data visualizations (D3)
+
+- write cron job to update db records daily
