@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129024510) do
+ActiveRecord::Schema.define(:version => 20121129224340) do
 
   create_table "comments", :force => true do |t|
     t.integer  "issue_id"
@@ -25,9 +25,10 @@ ActiveRecord::Schema.define(:version => 20121129024510) do
   create_table "commits", :force => true do |t|
     t.string   "user"
     t.datetime "date"
-    t.integer  "issue_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "sha"
+    t.string   "parent_sha"
   end
 
   create_table "events", :force => true do |t|
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20121129024510) do
     t.string   "name",       :default => "", :null => false
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+    t.string   "chart_data"
   end
 
 end

@@ -29,8 +29,8 @@ module GithubDataProcessor
     end
     data
   end
+
+  def save_data(data)
+
+  end
 end
-
-# @repo.collect_data([users_by_comments, users_by_commits]).to_json
-
-

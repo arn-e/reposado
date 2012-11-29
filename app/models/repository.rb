@@ -18,6 +18,8 @@ class Repository < ActiveRecord::Base
     @repo.save!
     repo_id = Repository.last.id
     collect_issues(repo_path, repo_id)
+    collect_commits(repo_path, repo_id)
+    @repo
   end
 
   private
@@ -41,12 +43,19 @@ class Repository < ActiveRecord::Base
     end
   end
 
-  def self.collect_commits
+  def self.collect_commits(repo_path, repo_id)
     # 1. get all branches
     # 2. get all commits for a given branch by first getting the top 100, then passing in the last SHA as the next parameter
     # 3. de-duplicate the results, probably based on SHA1
     # need : starting sha
     #      : starting branch
+    # GET /repos/:owner/:repo/commits
+
+  end
+
+  def self.collect_branches(repo_path)
+    # GET /repos/:owner/:repo/branches
+
   end
 
   def self.update_issue_child_data(data, issue_number, data_type)

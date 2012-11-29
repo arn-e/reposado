@@ -28,7 +28,9 @@ module GithubHandler
     json_body = JSON.parse(response.body)
   end
 
-  # GET /repos/:owner/:repo/commits
+  def self.query_github_branches(repo)
+
+  end
 
   def self.set_connection_parameters(url, port = 80)
     uri = URI.parse(url)
