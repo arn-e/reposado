@@ -24,47 +24,43 @@ describe Repository do
     end
 
     let (:repo) { Repository.first }
-    # HOW TO CLEAR DB AFTER THESE TESTS RUN?
 
-    describe "#top_users_by_commits" do
+    describe "#users_by_commits" do
       it "has number of user commits" do
-        @data = repo.top_users_by_commits
-        @data.first[:username].should eq "octocat"
-        @data.first[:commits].should eq 30
+        @data = repo.users_by_commits
+        @data[:user_commit_counts].keys.first.should eq "octocat"
+        @data[:user_commit_counts].values.first.should eq 6
 
-        @data.last[:username].should eq "user2"
-        @data.last[:commits].should eq 20
+        @data[:user_commit_counts].keys.last.should eq "user2"
+        @data[:user_commit_counts].values.last.should eq 4
       end
     end
 
-    describe "#top_users_by_comments" do
+    describe "#users_by_comments" do
       it "has number of user comments" do
-        @data = repo.top_users_by_comments
-        @data.first[:username].should eq "user2"
-        @data.first[:comments].should eq 35
+        @data = repo.users_by_comments
+        @data[:user_comment_counts].keys.first.should eq "octocat"
+        @data[:user_comment_counts].values.first.should eq 6
 
-        @data.last[:username].should eq "octocat"
-        @data.last[:comments].should eq 30
+        @data[:user_comment_counts].keys.last.should eq "user2"
+        @data[:user_comment_counts].values.last.should eq 7
       end
     end
 
     describe "#activity_by_week" do
       it "has dates" do
-        @data = repo.activity_by_week
-        @data.first[:date].should eq DateTime.strptime("2011-04-14T16:00:49Z")
-        @data.first[:activities].should eq 30
-
-        # [ { :date => DATETIME_OBJ, :activities => INT },
-        #   { :date => DATETIME_OBJ, :activities => INT }
-        # ]
+        pending
+        # @data = repo.activity_by_week
+        # @data.first[:date].should eq DateTime.strptime("2011-04-14T16:00:49Z")
+        # @data.first[:activities].should eq 30
       end
     end
 
     describe "#to_json" do
-      it "converts a Ruby object to JSON" do
-        @data = repo.top_users_by_commits
-        @json = @data.to_json
-        @json.should be_instance_of JSON
+      it "correctly formats a hash" do
+        @data = repo.users_by_commits
+        @json = repo.to_json(@data)
+        @json.should eq "{\"user_commit_counts\":{\"octocat\":6,\"user2\":4}}"
       end
     end
   end

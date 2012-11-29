@@ -3,14 +3,17 @@
 a snapshot of community engagement for open source repos
 
 == TO DO
-11/28/12
+11/29/12
 
-- write tests/code for querying API
-- write tests/code for parsing data
-- write tests/code for processing data
+- move OAUTH token to config
+- refactor code for retrieving data from GitHub and saving to db
+- run and refactor Repository unit tests
+- write tests/code for sending processed data to results view
 
 - write integration tests for viewing results
 - code for results view and partials (HTML/CSS/ERB/JS)
 - code for data visualizations (D3)
 
-- write cron job to update db records daily
+- get code reviewed by staff
+
+- write scheduled job to update db records daily

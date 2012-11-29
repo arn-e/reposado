@@ -1,27 +1,36 @@
 module GithubDataProcessor
-  def top_users_by_commits
-    @commits = Commit.all
-    @commits.group("user")
-    # [ { :username => "octocat", :commits => 30 },
-    #   { :username => "user2", :commits => 20 } ]
+  def users_by_commits
+    counts = Hash.new(0)
+    issues.each do |issue|
+      issue.commits.group(:user).count.each do |commit_name, count|
+        counts[commit_name] += count
+      end
+    end
+    { :user_commit_counts => [counts] }
   end
 
-  def top_users_by_comments
-    # [ { :username => "user2", :comments => 35 },
-    #   { :username => "octocat", :comments => 30 } ]
+  def users_by_comments
+    counts = Hash.new(0)
+    issues.each do |issue|
+      issue.comments.group(:user).count.each do |comment_name, count|
+        counts[comment_name] += count
+      end
+    end
+    { :user_comment_counts => [counts] }
   end
 
   def activity_by_week
   end
 
-  def to_json
+  def collect_data(hashes=[])
+    data = {}
+    hashes.each do |hash|
+      data[hash.keys.first] = hash.values.first
+    end
+    data
   end
-
 end
 
+# @repo.collect_data([users_by_comments, users_by_commits]).to_json
 
-# @repos = Repository.all
 
-# @repos.each do |repo|
-#   repo.top_users_by_commits
-# end
