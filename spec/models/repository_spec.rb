@@ -24,27 +24,26 @@ describe Repository do
     end
 
     let (:repo) { Repository.first }
-    # HOW TO CLEAR DB AFTER THESE TESTS RUN?
 
     describe "#top_users_by_commits" do
       it "has number of user commits" do
         @data = repo.top_users_by_commits
-        @data.first[:username].should eq "octocat"
-        @data.first[:commits].should eq 30
+        @data.keys.first.should eq "octocat"
+        @data.values.first.should eq 6
 
-        @data.last[:username].should eq "user2"
-        @data.last[:commits].should eq 20
+        @data.keys.last.should eq "user2"
+        @data.values.last.should eq 4
       end
     end
 
     describe "#top_users_by_comments" do
       it "has number of user comments" do
         @data = repo.top_users_by_comments
-        @data.first[:username].should eq "user2"
-        @data.first[:comments].should eq 35
+        @data.keys.first.should eq "octocat"
+        @data.values.first.should eq 6
 
-        @data.last[:username].should eq "octocat"
-        @data.last[:comments].should eq 30
+        @data.keys.last.should eq "user2"
+        @data.values.last.should eq 7
       end
     end
 
