@@ -1,5 +1,7 @@
 Reposado::Application.routes.draw do
   root :to => "repositories#index"
+  match "repositories/create" => 'repositories#create', :method => :post
+
   # root :to => 'index'
   # The priority is based upon order of creation:
   # first created -> highest priority.

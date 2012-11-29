@@ -17,8 +17,8 @@
     <div class="span6">
       <p>enter github url</p>
 
-      <%= form_tag() do %>
-        <%= text_field_tag "Repo" %>
+      <%= form_tag('repositories/create', :method => "post") do %>
+        <%= text_field_tag "repo" %>
         <%= submit_tag "Submit" %>
       <% end %>
     </div>
