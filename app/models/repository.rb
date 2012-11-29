@@ -5,6 +5,7 @@ class Repository < ActiveRecord::Base
   include GithubDataProcessor
   include GithubHandler
 
+  attr_accessible :chart_data
   has_many :issues
   has_many :commits
   validates_presence_of :name, :url
@@ -94,4 +95,7 @@ class Repository < ActiveRecord::Base
     end
   end
 
+  def self.save_chart_data(data)
+    chart_data = data
+  end
 end
