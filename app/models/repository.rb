@@ -5,8 +5,8 @@ class Repository < ActiveRecord::Base
   include GithubDataProcessor
   include GithubHandler
 
-  attr_accessible :user_comment_counts
-  has_many :issues, :commits
+  has_many :issues
+  has_many :commits
   validates_presence_of :name, :url
 
   def self.new_repository(url)
