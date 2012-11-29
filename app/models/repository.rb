@@ -35,15 +35,20 @@ class Repository < ActiveRecord::Base
     data.each do |issue|
       data_types.each do |data_type|
         comment_data = GithubHandler.query_github_issue_data(repo_path, issue["number"].to_i, data_type)
-        update_issue_comment_data(comment_data, issue["number"].to_i, data_type) unless comment_data.length < 1
+        update_issue_child_data(comment_data, issue["number"].to_i, data_type) unless comment_data.length < 1
       end
     end
   end
 
   def self.collect_commits
+    # 1. get all branches
+    # 2. get all commits for a given branch by first getting the top 100, then passing in the last SHA as the next parameter
+    # 3. de-duplicate the results, probably based on SHA1
+    # need : starting sha
+    #      : starting branch
   end
 
-  def self.update_issue_comment_data(data, issue_number, data_type)
+  def self.update_issue_child_data(data, issue_number, data_type)
     data.each do |issue_data|
       case data_type
       when "comments"
