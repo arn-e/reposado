@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121127235724) do
+ActiveRecord::Schema.define(:version => 20121129024510) do
 
   create_table "comments", :force => true do |t|
     t.integer  "issue_id"
@@ -43,8 +43,11 @@ ActiveRecord::Schema.define(:version => 20121127235724) do
     t.integer  "repository_id"
     t.string   "title"
     t.text     "body"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "git_issue_number"
+    t.datetime "git_created_at"
+    t.datetime "git_updated_at"
   end
 
   create_table "repositories", :force => true do |t|
