@@ -1,5 +1,5 @@
 class Commit < ActiveRecord::Base
-  belongs_to :issue
+  belongs_to :repository
 
   validates_presence_of :user, :date
 end

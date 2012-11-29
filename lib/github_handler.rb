@@ -2,10 +2,12 @@ require 'net/http'
 require 'net/https'
 
 module GithubHandler
+
   OAUTH_TOKEN = "052fa222631a8872903551d0675953361d7810c7"
 
+  # refactor
+
   def self.query_github(repo, state, page_num = 1)
-    # aws_secret = ENV["GITHUB_API_KEY"]
     url = "https://api.github.com/repos#{repo}/issues?state=#{state}&page=#{page_num}&per_page=100"
     request, http = self.set_connection_parameters(url, 443)
     response = http.request(request)
@@ -13,12 +15,20 @@ module GithubHandler
   end
 
   def self.query_github_issue_data(repo, issue_number, data_type = "comments")
-    # aws_secret = ENV["GITHUB_API_KEY"]
     url = "https://api.github.com/repos#{repo}/issues/#{issue_number}/#{data_type}"
     request, http = self.set_connection_parameters(url, 443)
     response = http.request(request)
     json_body = JSON.parse(response.body)
   end
+
+  def self.query_github_commits(repo)
+    url = "https://api.github.com/repos#{repo}/commits"
+    request, http = self.set_connection_parameters(url, 443)
+    response = http.request(request)
+    json_body = JSON.parse(response.body)
+  end
+
+  # GET /repos/:owner/:repo/commits
 
   def self.set_connection_parameters(url, port = 80)
     uri = URI.parse(url)
