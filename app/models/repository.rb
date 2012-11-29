@@ -1,8 +1,118 @@
 require './lib/github_data_processor.rb'
+require './lib/github_handler.rb'
 
 class Repository < ActiveRecord::Base
   include GithubDataProcessor
+  include GithubHandler
 
   has_many :issues
   validates_presence_of :name, :url
+
+  def self.new_repository(url)
+    full_url = url
+    repo_path = URI.parse(url).path
+    @repo = Repository.new
+    @repo.url = full_url
+    @repo.name = repo_path
+    @repo.save!
+    repo_id = Repository.last.id
+    collect_issues(repo_path, repo_id)
+  end
+
+  private
+
+  def self.collect_issues(repo_path, repo_id)
+    open_data = GithubHandler.query_github(repo_path, "open")
+    closed_data = GithubHandler.query_github(repo_path, "closed")
+    update_issue_data(open_data, repo_id)
+    update_issue_data(closed_data, repo_id)
+    puts
+    p open_data
+    p closed_data
+    puts
+    collect_issue_data(repo_path, open_data)
+    collect_issue_data(repo_path, closed_data)
+  end
+
+  def self.collect_issue_data(repo_path, data)
+    puts
+    puts
+    puts
+    p data
+    puts
+    puts
+    puts
+    data_types = ["comments", "events"]
+    data.each do |issue|
+      data_types.each do |data_type|
+        comment_data = GithubHandler.query_github_issue_data(repo_path, issue["number"].to_i, data_type)
+        update_issue_comment_data(comment_data, issue["number"].to_i, data_type) unless comment_data.length < 1
+      end
+    end
+  end
+
+  def self.update_issue_comment_data(data, issue_number, data_type)
+    data.each do |issue_data|
+      puts
+      puts
+      puts
+      p issue_data
+      puts
+      puts
+      puts
+      case data_type
+      when "comments"
+        new_issue_data = Comment.new
+      when "events"
+        new_issue_data = Event.new
+      end
+
+      new_issue_data.issue_id = issue_number.to_i
+      if data_type == "comments"
+        new_issue_data.body = issue_data["body"]
+      end
+      new_issue_data.date = issue_data["created_at"]
+
+      if data_type == "comments"
+        new_issue_data.user = issue_data["user"]["login"]
+      else
+        new_issue_data.user = issue_data["actor"]["login"]
+      end
+
+      if data_type == "events"
+        new_issue_data.status = issue_data["event"]
+      end
+      new_issue_data.save!
+    end
+  end
+
+
+  def self.update_issue_data(data, repo_id)
+    data.each do |issue|
+      new_issue = Issue.new
+      new_issue.repository_id = repo_id
+      new_issue.git_issue_number = issue["number"]
+      new_issue.title = issue["title"]
+      new_issue.body = issue["body"]
+      new_issue.git_created_at = issue["created_at"]
+      new_issue.git_updated_at = issue["updated_at"]
+      # new_issue.date_closed = issue["closed_at"]
+      # new_issue.state = issue["state"]
+      new_issue.save!
+    end
+  end
+
 end
+#############
+
+      # Issue.from_data({})
+
+      # def self.from_data({:repo_id, :title, :body})
+      #   new_issue = self.new
+      #   new_issue.git_issue_number = issue["number"]
+      #   new_issue.title = issue["title"]
+      #   new_issue.body = issue["body"]
+      #   new_issue.git_created_at = issue["created_at"]
+      #   new_issue.git_updated_at = issue["updated_at"]
+      #   new_issue
+      # end

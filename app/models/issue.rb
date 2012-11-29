@@ -3,5 +3,5 @@ class Issue < ActiveRecord::Base
   has_many :commits
   has_many :comments
   has_many :events
-  validates_presence_of :body, :title
+  validates_presence_of :title
 end
