@@ -2,6 +2,7 @@ require './lib/github_data_processor.rb'
 require './lib/github_handler.rb'
 
 class Repository < ActiveRecord::Base
+
   include GithubDataProcessor
   include GithubHandler
 
@@ -49,22 +50,46 @@ class Repository < ActiveRecord::Base
   end
 
   def self.collect_commits(repo_path, repo_id)
-    # 1. get all branches
-    # 2. get all commits for a given branch by first getting the top 100, then passing in the last SHA as the next parameter
-    # 3. de-duplicate the results, probably based on SHA1
-    # need : starting sha
-    #      : starting branch
-    # GET /repos/:owner/:repo/commits
+    branches = collect_branches(repo_path)
+
+    branches.each do |branch|
+      branch_name, branch_start_sha = branch["name"], branch["commit"]["sha"]
+      commit_data = collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
+      update_commit_data(commit_data, repo_id) unless commit_data.length < 1
+    end
 
   end
 
-  def self.collect_branches(repo_path)
-    # GET /repos/:owner/:repo/branches
+  def self.collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
+    GithubHandler.query_github_commits(repo_path, branch_name, branch_start_sha)
+  end
 
+  def self.collect_branches(repo_path)
+    GithubHandler.query_github_branches(repo_path)
+  end
+
+  def self.update_commit_data(commit_data, repo_id)
+    commit_data.each do |commit|
+      logger.debug("error : #{commit}")
+      new_commit = Commit.new
+      new_commit.repository_id = repo_id
+      new_commit.sha = commit["sha"]
+      if commit["parents"].length != 0
+        new_commit.parent_sha = commit["parents"][0]["sha"] # add multiple parents?
+      end
+      # if commit["committer"]["login"] == nil
+      new_commit.user = commit["commit"]["committer"]["name"]
+      # else
+        # new_commit.user = commit["committer"]["login"]
+      # end
+      new_commit.date = commit["commit"]["committer"]["date"]
+      new_commit.save!
+    end
   end
 
   def self.update_issue_child_data(data, issue_number, data_type)
     data.each do |issue_data|
+
       case data_type
       when "comments"
         new_issue_data = Comment.new
