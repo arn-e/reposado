@@ -10,4 +10,8 @@ class RepositoriesController < ApplicationController
     # Repository.collect_issue_data(params[:Repo])
   end
 
+  def view
+
+  end
+
 end
