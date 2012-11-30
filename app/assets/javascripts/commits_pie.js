@@ -1,4 +1,5 @@
-$(document).ready(function(){
+var draw_pie = function(json_data){
+  console.log(json_data);
   var width = 960,
       height = 600,
       radius = Math.min(width, height) / 2;
@@ -72,57 +73,55 @@ $(document).ready(function(){
           .style("fill", color(i));
   };
 
-  d3.json("pie_data.json", function(data) {
+  json_data.committers.sort( function(a,b) {return b.num - a.num;} );
+  json_data.committers.forEach(function(d,i) { total_commits += d.num; d.ind = i; });
 
-      data.committers.sort( function(a,b) {return b.num - a.num;} );
-      data.committers.forEach(function(d,i) { total_commits += d.num; d.ind = i; });
+  var eight_and_others = json_data.committers.slice(0,8);
+  if (json_data.committers.length > 8) {
+    var rest_num = json_data.committers.slice(8).reduce(
+                    function(sum,a){return sum + a.num;}, 0);
+    eight_and_others.push( {"name" : "(others)", "num" : rest_num, "ind" : 8} );
+  };
 
-      var eight_and_others = data.committers.slice(0,8);
-      if (data.committers.length > 8) {
-        var rest_num = data.committers.slice(8).reduce(
-                        function(sum,a){return sum + a.num;}, 0);
-        eight_and_others.push( {"name" : "(others)", "num" : rest_num, "ind" : 8} );
-      };
+  console.log(eight_and_others);
+  var arc_group = pie_svg.select("g.arc_group")
+      .selectAll("path.arc")
+      .data(pie(eight_and_others))
+      .enter().append("path")
+      .attr("class", "arc");
 
-      var arc_group = pie_svg.select("g.arc_group")
-          .selectAll("path.arc")
-          .data(pie(eight_and_others))
-          .enter().append("path")
-          .attr("class", "arc");
+  arc_group.attr("d", arc)
+      .attr("class",   function(d) {return "arcno" + d.data.ind;} )
+      .style("fill",   function(d) {return color(d.data.ind);})
+      .on("mouseover", function(d) {show_user(d.data);
+                                    light_sel(d.data.ind); })
+      .on("mouseout",  function(d) {unshow_user();
+                                    unlight_sel(d.data.ind); } );
 
-      arc_group.attr("d", arc)
-          .attr("class",   function(d) {return "arcno" + d.data.ind;} )
-          .style("fill",   function(d) {return color(d.data.ind);})
-          .on("mouseover", function(d) {show_user(d.data);
-                                        light_sel(d.data.ind); })
-          .on("mouseout",  function(d) {unshow_user();
-                                        unlight_sel(d.data.ind); } );
+  var legend_group = pie_svg.select("g.legend_group")
+      .selectAll("g.legend_entry_group")
+      .data(eight_and_others)
+      .enter().append("g")
+      .attr("class",     function(d) {return "legend_entry_group " + "legno" + d.ind;})
+      .attr("transform", function(d) {return "translate(0," + 30 * d.ind + ")";})
+      .on("mouseover",   function(d) {show_user(d);
+                                      light_sel(d.ind); })
+      .on("mouseout",    function(d) {unshow_user();
+                                      unlight_sel(d.ind); } );
 
-      var legend_group = pie_svg.select("g.legend_group")
-          .selectAll("g.legend_entry_group")
-          .data(eight_and_others)
-          .enter().append("g")
-          .attr("class",     function(d) {return "legend_entry_group " + "legno" + d.ind;})
-          .attr("transform", function(d) {return "translate(0," + 30 * d.ind + ")";})
-          .on("mouseover",   function(d) {show_user(d);
-                                          light_sel(d.ind); })
-          .on("mouseout",    function(d) {unshow_user();
-                                          unlight_sel(d.ind); } );
+  legend_group.append("text")
+      .attr("x", 40)
+      .style("text-anchor", "end")
+      .text(function(d){return d.num;});
 
-      legend_group.append("text")
-          .attr("x", 40)
-          .style("text-anchor", "end")
-          .text(function(d){return d.num;});
+  legend_group.append("circle")
+      .attr("cx", 60)
+      .attr("cy", -9)
+      .attr("r", 10)
+      .style("fill", function(d) {return color(d.ind);} );
 
-      legend_group.append("circle")
-          .attr("cx", 60)
-          .attr("cy", -9)
-          .attr("r", 10)
-          .style("fill", function(d) {return color(d.ind);} );
+  legend_group.append("text")
+      .text(function(d){return d.name;})
+      .attr("x", function(d){return d.ind != 8 ? 80 : 74;});
 
-      legend_group.append("text")
-          .text(function(d){return d.name;})
-          .attr("x", function(d){return d.ind != 8 ? 80 : 74;});
-
-  });
-});
+};
