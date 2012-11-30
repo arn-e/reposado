@@ -9,16 +9,12 @@ module GithubHandler
 
   def self.query_github(repo, state, page_num = 1)
     url = "https://api.github.com/repos#{repo}/issues?state=#{state}&page=#{page_num}&per_page=100"
-    request, http = self.set_connection_parameters(url, 443)
-    response = http.request(request)
-    json_body = JSON.parse(response.body)
+    process_url(url)
   end
 
   def self.query_github_issue_data(repo, issue_number, data_type = "comments")
     url = "https://api.github.com/repos#{repo}/issues/#{issue_number}/#{data_type}"
-    request, http = self.set_connection_parameters(url, 443)
-    response = http.request(request)
-    json_body = JSON.parse(response.body)
+    process_url(url)
   end
 
   def self.query_github_commits(repo, branch_name, branch_start_sha)
@@ -31,21 +27,25 @@ module GithubHandler
 
   def self.query_github_branches(repo)
     url = "https://api.github.com/repos#{repo}/branches"
-    request, http = self.set_connection_parameters(url, 443)
-    response = http.request(request)
-    json_body = JSON.parse(response.body)
+    process_url(url)
   end
 
   def self.set_connection_parameters(url, port = 80)
     uri = URI.parse(url)
-    uri.port = port
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = Net::HTTP.new(uri.host, port)
+    # What does this stuff mean? What does it do? -LRW
     if port == 443
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
     request = Net::HTTP::Get.new(uri.request_uri, initheader = {"Authorization" => "token #{OAUTH_TOKEN}"})
     [request, http]
+  end
+
+  def self.process_url(url)
+    request, http = self.set_connection_parameters(url, 443)
+    response = http.request(request)
+    json_body = JSON.parse(response.body)
   end
 
 end
