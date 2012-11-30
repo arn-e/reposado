@@ -44,6 +44,14 @@ class Repository < ActiveRecord::Base
   end
 
   def self.collect_commits(repo_path, repo_id)
+    branches = collect_branches(repo_path)
+
+    branches.each do |branch|
+      branch_name, branch_start_sha = branch["name"], branch["commit"]["sha"]
+      commit_data = collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
+      update_commit_data(commit_data, repo_id) unless commit_data.length < 1
+    end
+
     # 1. get all branches
     # 2. get all commits for a given branch by first getting the top 100, then passing in the last SHA as the next parameter
     # 3. de-duplicate the results, probably based on SHA1
@@ -53,9 +61,22 @@ class Repository < ActiveRecord::Base
 
   end
 
-  def self.collect_branches(repo_path)
-    # GET /repos/:owner/:repo/branches
+  def self.collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
+    GithubHandler.query_github_commits(repo_path, branch_name, branch_start_sha)
+  end
 
+  def self.collect_branches(repo_path)
+    GithubHandler.query_github_branches(repo_path)
+  end
+
+  def self.update_commit_data(commit_data, repo_id)
+    commit_data.eacch do |commit|
+      new_commit = Commit.new
+      new_commit.sha = commit["sha"]
+      new_commit.parent_sha = commit["parents"]["sha"]
+      new_commit.user = commit["committer"]["login"]
+      new_commit.date = commit["committer"]["date"]
+    end
   end
 
   def self.update_issue_child_data(data, issue_number, data_type)
