@@ -1,0 +1,5 @@
+.arc path {stroke-width: 0;}
+.legend text {fill: #402020;}
+#pie {position: relative;
+      width: 84%;
+      margin: -0.5% 0 0 8%;}
