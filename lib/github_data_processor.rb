@@ -1,22 +1,26 @@
 module GithubDataProcessor
   def users_by_commits
     counts = Hash.new(0)
-    issues.each do |issue|
-      issue.commits.group(:user).count.each do |commit_name, count|
-        counts[commit_name] += count
-      end
+    result = []
+    commits.group(:user).count.each do |commit_name, count|
+      counts[commit_name] += count
+      result.push({"name" => commit_name, "num" => counts[commit_name]})
     end
-    { :user_commit_counts => [counts] }
+    { :commiters => result }
   end
 
   def users_by_comments
     counts = Hash.new(0)
+    result = []
     issues.each do |issue|
       issue.comments.group(:user).count.each do |comment_name, count|
         counts[comment_name] += count
+        result.push({"name" => comment_name, "num" => counts[comment_name]})
       end
     end
-    { :user_comment_counts => [counts] }
+    # {"username"=>20, "username2"=>15}
+    # { {"name"=>"username", "num"=>20}, {"name"=>username2", "num"=>15} }
+    { :committers => result }  #  ###################### do not forget to change this back
   end
 
   def activity_by_week
