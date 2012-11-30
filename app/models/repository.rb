@@ -6,6 +6,7 @@ class Repository < ActiveRecord::Base
   include GithubDataProcessor
   include GithubHandler
 
+  attr_accessible :chart_data
   has_many :issues
   has_many :commits
   validates_presence_of :name, :url
@@ -22,6 +23,10 @@ class Repository < ActiveRecord::Base
     collect_commits(repo_path, repo_id)
     @repo
   end
+
+  # def save_chart_data(data)
+  #   chart_data = data
+  # end
 
   private
 
@@ -88,11 +93,12 @@ class Repository < ActiveRecord::Base
       case data_type
       when "comments"
         new_issue_data = Comment.new
+        new_issue_data.issue_id = Issue.last.id
       when "events"
         new_issue_data = Event.new
+        new_issue_data.issue_id = Issue.last.id
       end
-
-      new_issue_data.issue_id = issue_number.to_i
+      # new_issue_data.issue_id = issue.id
       if data_type == "comments"
         new_issue_data.body = issue_data["body"]
         new_issue_data.user = issue_data["user"]["login"]
@@ -109,7 +115,7 @@ class Repository < ActiveRecord::Base
     data.each do |issue|
       new_issue = Issue.new
       new_issue.repository_id = repo_id
-      new_issue.git_issue_number = issue["number"]
+      # new_issue.git_issue_number = issue["number"].to_i
       new_issue.title = issue["title"]
       new_issue.body = issue["body"]
       new_issue.git_created_at = issue["created_at"]
@@ -119,5 +125,6 @@ class Repository < ActiveRecord::Base
       new_issue.save!
     end
   end
+
 
 end
