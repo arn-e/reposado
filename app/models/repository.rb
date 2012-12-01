@@ -21,7 +21,7 @@ class Repository < ActiveRecord::Base
     @repo.save!
     repo_id     = Repository.last.id
     collect_issues(repo_path, Repository.last.id)
-    collect_commits(repo_path, repo_id)
+    collect_commits(repo_path, Repository.last.id)
     @repo
   end
 
@@ -69,7 +69,7 @@ class Repository < ActiveRecord::Base
     commit_data.each do |commit|
       logger.debug("error : #{commit}")
       @new_commit = Commit.new
-      @new_commit.repository_id = Repository.last.id
+      @new_commit.repository_id = repo_id
       @new_commit.sha = commit["sha"]
       if commit["parents"].length != 0
         @new_commit.parent_sha = commit["parents"][0]["sha"] # add multiple parents?
@@ -131,7 +131,7 @@ class Repository < ActiveRecord::Base
       @new_issue.git_updated_at = Date.strptime(issue["updated_at"])
       # new_issue.date_closed = issue["closed_at"]
 
-      @new_issue.repository_id = Repository.last.id
+      @new_issue.repository_id = repo_id
       # new_issue.state = issue["state"]
       @new_issue.save!
 
