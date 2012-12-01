@@ -9,12 +9,12 @@ module GithubHandler
 
   def self.query_github(repo, state, page_num = 1)
     url = "https://api.github.com/repos#{repo}/issues?state=#{state}&page=#{page_num}&per_page=100"
-    process_url(url)
+    query_api(url)
   end
 
   def self.query_github_issue_data(repo, issue_number, data_type = "comments")
     url = "https://api.github.com/repos#{repo}/issues/#{issue_number}/#{data_type}"
-    process_url(url)
+    query_api(url)
   end
 
   def self.query_github_commits(repo, branch_name, branch_start_sha)
@@ -27,7 +27,7 @@ module GithubHandler
 
   def self.query_github_branches(repo)
     url = "https://api.github.com/repos#{repo}/branches"
-    process_url(url)
+    query_api(url)
   end
 
   def self.set_connection_parameters(url, port = 80)
@@ -42,7 +42,7 @@ module GithubHandler
     [request, http]
   end
 
-  def self.process_url(url)
+  def self.query_api(url)
     request, http = self.set_connection_parameters(url, 443)
     response = http.request(request)
     json_body = JSON.parse(response.body)

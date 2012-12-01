@@ -5,7 +5,7 @@ class RepositoriesController < ApplicationController
   end
 
   def create
-    @repo = Repository.new_repository(params[:repo])
+    @repo = Repository.from_url(params[:repo])
     @data = @repo.collect_data([@repo.users_by_comments]).to_json
     puts "DATA: #{@data}"
     @repo.chart_data = @data
