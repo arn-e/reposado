@@ -1,4 +1,9 @@
+require './lib/github_data_processor.rb'
+require './lib/github_handler.rb'
+
 class Issue < ActiveRecord::Base
+  include GithubDataProcessor
+
   belongs_to :repository
   # has_many :commits
   has_many :comments
