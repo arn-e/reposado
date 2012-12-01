@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129235437) do
+ActiveRecord::Schema.define(:version => 20121201051252) do
 
   create_table "comments", :force => true do |t|
     t.integer  "issue_id"
@@ -53,11 +53,11 @@ ActiveRecord::Schema.define(:version => 20121129235437) do
   end
 
   create_table "repositories", :force => true do |t|
-    t.string   "url",        :default => "", :null => false
-    t.string   "name",       :default => "", :null => false
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-    t.string   "chart_data"
+    t.string   "url",                       :default => "", :null => false
+    t.string   "name",                      :default => "", :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.text     "chart_data", :limit => 255
   end
 
 end

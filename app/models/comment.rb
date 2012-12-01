@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
     puts "USER LOGIN: #{json["user"]["login"]}"
     comment.user = json["user"]["login"]
     comment.body = json["body"]
-    comment.date = Date.strptime(json["created_at"])
+    comment.date = DateTime.parse(json["created_at"])
     comment
   end
 end

@@ -15,6 +15,9 @@ class Repository < ActiveRecord::Base
   def self.from_url(url)
     full_url    = url
     repo_path   = URI.parse(url).path
+    @repo_exists = Repository.find_by_url(full_url)
+    return @repo_exists if @repo_exists
+
     @repo       = Repository.new
     @repo.url   = full_url
     @repo.name  = repo_path
@@ -24,7 +27,7 @@ class Repository < ActiveRecord::Base
     #commits_from_github(repo_path, repo_id)
     # collect_commits(repo_path, repo_id)
     # collect_issues(repo_path, Repository.last.id)
-    # collect_commits(repo_path, Repository.last.id)
+    collect_commits(repo_path, repo_id)
     @repo
   end
 
@@ -89,7 +92,7 @@ class Repository < ActiveRecord::Base
         else
           @new_commit.user = " "
         end
-        @new_commit.date = commit["commit"]["committer"]["date"]
+        @new_commit.date = DateTime.parse(commit["commit"]["committer"]["date"])
         @new_commit.save!
       end
     end
