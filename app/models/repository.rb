@@ -21,7 +21,7 @@ class Repository < ActiveRecord::Base
     @repo.save!
     repo_id     = Repository.last.id
     collect_issues(repo_path, Repository.last.id)
-    # collect_commits(repo_path, repo_id)
+    collect_commits(repo_path, repo_id)
     @repo
   end
 
@@ -74,13 +74,17 @@ class Repository < ActiveRecord::Base
       if commit["parents"].length != 0
         @new_commit.parent_sha = commit["parents"][0]["sha"] # add multiple parents?
       end
-      if commit["committer"]["login"] == nil
-        @new_commit.user = commit["commit"]["committer"]["name"]
-      else
-        @new_commit.user = commit["committer"]["login"]
+      if commit["committer"] != nil
+        if commit["committer"]["login"] == nil
+          @new_commit.user = commit["commit"]["committer"]["name"]
+        elsif commit["committer"]["login"] != nil
+          @new_commit.user = commit["committer"]["login"]
+        else
+          @new_commit.user = " "
+        end
+        @new_commit.date = commit["commit"]["committer"]["date"]
+        @new_commit.save!
       end
-      @new_commit.date = commit["commit"]["committer"]["date"]
-      @new_commit.save!
     end
   end
 
