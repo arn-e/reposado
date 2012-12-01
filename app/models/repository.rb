@@ -34,7 +34,6 @@ class Repository < ActiveRecord::Base
     open_data.each   {|issue| @issue = Issue.from_json(issue, repo_id)  }
     closed_data.each {|issue| @issue = Issue.from_json(issue, repo_id)  }
 
-
     # update_issue_data(open_data, repo_id)
     # update_issue_data(closed_data, repo_id)
 
