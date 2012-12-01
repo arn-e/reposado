@@ -92,7 +92,7 @@ class Repository < ActiveRecord::Base
         else
           @new_commit.user = " "
         end
-        @new_commit.date = commit["commit"]["committer"]["date"]
+        @new_commit.date = DateTime.parse(commit["commit"]["committer"]["date"])
         @new_commit.save!
       end
     end

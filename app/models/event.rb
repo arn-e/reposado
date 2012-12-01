@@ -5,8 +5,6 @@ class Event < ActiveRecord::Base
 
   def self.from_json(json)
     event         = self.new
-    p "EVENT ::: #{event}"
-    p "JSON  ::: #{json}"
     event.date    = DateTime.parse(json["created_at"])
     event.user    = json["actor"]["login"]
     event.status  = json["event"]
