@@ -24,19 +24,20 @@ class Issue < ActiveRecord::Base
     puts "repo number: #{@issue.git_issue_number}"
     puts "*************************"
     comments = GithubHandler.query_github_issue_data(@issue.repository.name, @issue.git_issue_number, "comments")
-    puts "*************************"
-    puts "COMMENTS: #{comments}"
-    puts "*************************"
+
     #query API for issue comments
     #receive parsed JSON
     #create Comment for each element of parsed JSON
     if (comments.class == Array && comments != []) || (comments.class == Hash && comments["message"] != "Not Found")
       # unless (comments["message"] == "Not Found")
+        puts "*************************"
+        puts "COMMENTS: #{comments}"
+        puts "*************************"
         comments.each do |comment|
           # unless (comments["message"] == "Not Found")
           @comment          = Comment.from_json(comment)
           @comment.issue_id = @issue.id
-          @comment.save!
+          @comment.save
         end
       # end
     end
