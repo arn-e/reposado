@@ -9,8 +9,8 @@ class Issue < ActiveRecord::Base
     @issue = self.new
     @issue.title = json["title"]
     @issue.body = json["body"]
-    @issue.git_created_at = Date.strptime(json["created_at"])
-    @issue.git_updated_at = Date.strptime(json["updated_at"])
+    @issue.git_created_at = DateTime.parse(json["created_at"])
+    @issue.git_updated_at = DateTime.parse(json["updated_at"])
     @issue.git_issue_number = json["number"]
     @issue.repository_id = repo_id
     @issue.save!
