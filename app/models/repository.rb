@@ -24,7 +24,7 @@ class Repository < ActiveRecord::Base
     #commits_from_github(repo_path, repo_id)
     # collect_commits(repo_path, repo_id)
     # collect_issues(repo_path, Repository.last.id)
-    # collect_commits(repo_path, Repository.last.id)
+    collect_commits(repo_path, repo_id)
     @repo
   end
 

@@ -1,13 +1,11 @@
 class RepositoriesController < ApplicationController
 
   def index
-
   end
 
   def create
     @repo = Repository.from_url(params[:repo])
-    @data = @repo.collect_data([@repo.users_by_comments]).to_json
-    puts "DATA: #{@data}"
+    @data = @repo.collect_data([@repo.users_by_commits, @repo.users_by_comments]).to_json
     @repo.chart_data = @data
     @repo.save
 

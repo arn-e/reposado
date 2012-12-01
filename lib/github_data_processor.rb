@@ -1,6 +1,7 @@
 module GithubDataProcessor
   def users_by_commits
     counts = Hash.new(0)
+    # TO DO: break this out into separate method -LRW
     commits.group(:user).count.each do |commit_name, count|
       counts[commit_name] += count
     end
@@ -33,7 +34,7 @@ module GithubDataProcessor
       result.push(formatted_count)
     end
 
-    { :committers => result }  #  ###################### do not forget to change this back
+    { :users_by_comments => result }  #  ###################### do not forget to change this back
   end
 
   def activity_by_week

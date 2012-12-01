@@ -3,17 +3,44 @@
 a snapshot of community engagement for open source repos
 
 == TO DO
-11/29/12
+11/30/12
 
+PLANNING
+
+- design library UI
+- plan additional features
+
+CODE
+
+Back end
 - move OAUTH token to config
-- refactor code for retrieving data from GitHub and saving to db
-- run and refactor Repository unit tests
+- run and refactor model unit tests
 - write tests/code for sending processed data to results view
+- write scheduled job to update db records daily
+- add check for existing repo
 
+Front end
+- code library UI
 - write integration tests for viewing results
 - code for results view and partials (HTML/CSS/ERB/JS)
 - code for data visualizations (D3)
 
-- get code reviewed by staff
+PROCESS
 
-- write scheduled job to update db records daily
+- get code reviewed by staff
+- push to production
+
+FEATURES
+
+(notes by Arne)
+
+11/30/2012 :
+
+- Time Metrics (comments & issues)
+  * Resolution times
+  * response times
+
+- Semantic Analysis
+  * Word Frequency (1-grams)
+  * Aggregate Sentiment
+
