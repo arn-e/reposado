@@ -3,3 +3,7 @@ class Commit < ActiveRecord::Base
 
   validates_presence_of :user, :date
 end
+
+def self.from_json
+end
+
