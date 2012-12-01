@@ -38,6 +38,22 @@ module GithubDataProcessor
   end
 
   def response_time_for_issues
+    response_times = Hash.new(0)
+
+    issues.each do |issue|
+
+      # check for blank entries
+      # first getting the response time for events
+      issue.events.each do |event|
+
+      end
+
+      # getting the response time for comments
+      issue.comments.each do |comment|
+
+      end
+
+    end
 
   end
 

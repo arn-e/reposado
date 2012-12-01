@@ -45,3 +45,6 @@ FEATURES
   * Word Frequency (1-grams)
   * Aggregate Sentiment
 
+- Data Collection
+  * Gather all commits instead of a subsset
+  * Gather user profiles & relations (maybe)
