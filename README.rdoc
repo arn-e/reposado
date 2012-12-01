@@ -17,13 +17,14 @@ Back end
 - run and refactor model unit tests
 - write tests/code for sending processed data to results view
 - write scheduled job to update db records daily
-- add check for existing repo
+- add check for existing repo * done (backend hack)
 
 Front end
 - code library UI
 - write integration tests for viewing results
 - code for results view and partials (HTML/CSS/ERB/JS)
 - code for data visualizations (D3)
+- add cache or cookie for rendered images
 
 PROCESS
 

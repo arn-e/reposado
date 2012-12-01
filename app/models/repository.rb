@@ -15,6 +15,9 @@ class Repository < ActiveRecord::Base
   def self.from_url(url)
     full_url    = url
     repo_path   = URI.parse(url).path
+    @repo_exists = Repository.find_by_url(full_url)
+    return @repo_exists if @repo_exists
+
     @repo       = Repository.new
     @repo.url   = full_url
     @repo.name  = repo_path

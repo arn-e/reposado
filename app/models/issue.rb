@@ -43,8 +43,9 @@ class Issue < ActiveRecord::Base
   end
 
   def self.events_from_json
-    events = GithubHandler.query_github_issue_data(@issue.repository.name, @issue.git_issue_number, "event")
-    unless (events["message"] == "Not Found") || (events == [])
+    events = GithubHandler.query_github_issue_data(@issue.repository.name, @issue.git_issue_number, "events")
+    if (events.class == Array && events != []) || (events.class == Hash && events["message"] != "Not Found")
+    # unless (events["message"] == "Not Found") || (events == [])
       events.each do |event|
         @event          = Event.from_json(event)
         @event.issue_id = @issue.id
@@ -52,4 +53,5 @@ class Issue < ActiveRecord::Base
       end
     end
   end
+
 end

@@ -37,6 +37,10 @@ module GithubDataProcessor
     { :users_by_comments => result }  #  ###################### do not forget to change this back
   end
 
+  def response_time_for_issues
+
+  end
+
   def activity_by_week
   end
 
