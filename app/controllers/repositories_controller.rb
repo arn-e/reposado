@@ -25,8 +25,5 @@ class RepositoriesController < ApplicationController
     end
   end
 
-  def view
-
-  end
 
 end

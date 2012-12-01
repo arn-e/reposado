@@ -23,6 +23,8 @@ class Repository < ActiveRecord::Base
     issues_from_github(repo_path, repo_id)
     #commits_from_github(repo_path, repo_id)
     # collect_commits(repo_path, repo_id)
+    # collect_issues(repo_path, Repository.last.id)
+    # collect_commits(repo_path, Repository.last.id)
     @repo
   end
 
@@ -74,18 +76,22 @@ class Repository < ActiveRecord::Base
     commit_data.each do |commit|
       logger.debug("error : #{commit}")
       @new_commit = Commit.new
-      @new_commit.repository_id = Repository.last.id
+      @new_commit.repository_id = repo_id
       @new_commit.sha = commit["sha"]
       if commit["parents"].length != 0
         @new_commit.parent_sha = commit["parents"][0]["sha"] # add multiple parents?
       end
-      if commit["committer"]["login"] == nil
-        @new_commit.user = commit["commit"]["committer"]["name"]
-      else
-        @new_commit.user = commit["committer"]["login"]
+      if commit["committer"] != nil
+        if commit["committer"]["login"] == nil
+          @new_commit.user = commit["commit"]["committer"]["name"]
+        elsif commit["committer"]["login"] != nil
+          @new_commit.user = commit["committer"]["login"]
+        else
+          @new_commit.user = " "
+        end
+        @new_commit.date = commit["commit"]["committer"]["date"]
+        @new_commit.save!
       end
-      @new_commit.date = commit["commit"]["committer"]["date"]
-      @new_commit.save!
     end
   end
 
@@ -121,6 +127,9 @@ class Repository < ActiveRecord::Base
   # end
 
 
+      # @new_issue.repository_id = repo_id
+      # new_issue.state = issue["state"]
+      # @new_issue.save!
 
 
 
