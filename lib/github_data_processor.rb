@@ -72,7 +72,14 @@ module GithubDataProcessor
 
   end
 
-  def word_frequency
+  def relevant_words
+    # tfidf score based on issue (as document) vs corpus
+    words = Hash.new
+    document = []
+    issues.each do |issue|
+
+    end
+
   end
 
   def average_response_time(sum = 0)
