@@ -51,10 +51,10 @@ module GithubDataProcessor
         end
       end
       issue.comments.first != nil ? (comment_date = issue.comments.first.date) : (comment_date = nil)
-      p "*********************************issue ID     : #{issue.id}"
-      p "*********************************created date : #{issue_created}"
-      p "*********************************event date   : #{event_date}"
-      p "*********************************comment_date : #{comment_date}"
+      # p "*********************************issue ID     : #{issue.id}"
+      # p "*********************************created date : #{issue_created}"
+      # p "*********************************event date   : #{event_date}"
+      # p "*********************************comment_date : #{comment_date}"
       if event_date == nil && comment_date == nil
         response_times[issue.id] = nil
       elsif comment_date == nil && event_date != nil
@@ -65,8 +65,14 @@ module GithubDataProcessor
         comment_date < event_date ? (response_times[issue.id] = (comment_date - issue_created)) : (response_times[issue.id] = (event_date - issue_created))
       end
     end
-
     response_times
+  end
+
+  def resolution_time_for_issues
+
+  end
+
+  def word_frequency
   end
 
   def average_response_time(sum = 0)
