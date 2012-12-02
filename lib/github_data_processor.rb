@@ -69,23 +69,39 @@ module GithubDataProcessor
   end
 
   def resolution_time_for_issues
-
-  end
-
-  def relevant_words
-    # tfidf score based on issue (as document) vs corpus
-    words = Hash.new
-    document = []
-    issues.each do |issue|
-
-    end
-
   end
 
   def average_response_time(sum = 0)
     response_times = response_time_for_issues
     response_times.each {|key, value| sum += value}
     sum / response_times.size
+  end
+
+  def relevant_words
+    # tfidf score based on issue (as document) vs corpus
+    document = []
+    issues.each do |issue|
+      words_body = issue.body.split(' ')
+      words_title = issue.title.split(' ')
+      words_all_comments = []
+      issue.comments.each do |issue_comments|
+        words_comments = issue_comments.body.split(' ')
+        words_all_comments += words_comments
+      end
+      words_issue = []
+      words_issue += words_body
+      words_issue += words_title
+      words_issue += words_all_comments
+      document << words_issue
+    end
+    score = TfIdf.new(document)
+    combined = Hash.new(0)
+    score.tf_idf.each do |i| 
+      i.each do |key, value|
+        (combined[key] = value) if (value > combined[key])
+      end
+    end
+    combined = combined.sort_by {|key, value| value}
   end
 
   def activity_by_week
