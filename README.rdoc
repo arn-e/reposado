@@ -39,7 +39,7 @@ FEATURES
 
 - Time Metrics (comments & issues)
   * Resolution times
-  * response times
+  * Response times
 
 - Semantic Analysis
   * Word Frequency (1-grams)
