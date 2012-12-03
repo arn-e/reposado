@@ -95,8 +95,8 @@ module GithubDataProcessor
       document << words_issue
     end
     score = TfIdf.new(document)
-    combined = Hash.new(0)
-    score.tf_idf.each do |i| 
+    combined = Hash.new(0)  
+    score.tf.each do |i| 
       i.each do |key, value|
         (combined[key] = value) if (value > combined[key])
       end
