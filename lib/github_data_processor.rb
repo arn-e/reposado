@@ -103,13 +103,13 @@ module GithubDataProcessor
     end
 
     score = TfIdf.new(document)
-    combined = Hash.new(0)  
-    score.tf_idf.each do |i| 
+    combined = Hash.new(0)
+    score.tf_idf.each do |i|
       i.each do |key, value|
         (combined[key] = value) if (value > combined[key])
       end
     end
-    
+
     combined = combined.sort_by {|key, value| value}
   end
 
