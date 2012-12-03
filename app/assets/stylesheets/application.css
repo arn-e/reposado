@@ -12,10 +12,12 @@
  *= require_tree .
  */
 
-body {background-color: #a0a0d0;
-    color: #503030;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 150%;}
+body {
+  background-color: #a0a0d0;
+  color: #503030;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 150%;
+}
 
 #brand h1 {
   font-family: 'Josefin Sans', sans-serif;
