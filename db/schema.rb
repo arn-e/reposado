@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121201051252) do
+ActiveRecord::Schema.define(:version => 20121203025445) do
 
   create_table "comments", :force => true do |t|
     t.integer  "issue_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20121201051252) do
     t.string   "sha"
     t.string   "parent_sha"
     t.integer  "repository_id"
+    t.text     "message"
   end
 
   create_table "events", :force => true do |t|

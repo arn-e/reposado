@@ -83,6 +83,9 @@ class Repository < ActiveRecord::Base
       if commit["parents"].length != 0
         @new_commit.parent_sha = commit["parents"][0]["sha"] # add multiple parents?
       end
+      if commit["commit"] != nil
+        @new_commit.message = commit["commit"]["message"]
+      end
       if commit["committer"] != nil
         if commit["committer"]["login"] == nil
           @new_commit.user = commit["commit"]["committer"]["name"]
