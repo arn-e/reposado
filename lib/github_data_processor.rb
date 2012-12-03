@@ -81,6 +81,7 @@ module GithubDataProcessor
     # tfidf score based on issue (as document) vs corpus
     # to do : include commit messages
     document = []
+
     issues.each do |issue|
       words_body = issue.body.split(' ')
       words_title = issue.title.split(' ')
@@ -108,6 +109,7 @@ module GithubDataProcessor
         (combined[key] = value) if (value > combined[key])
       end
     end
+    
     combined = combined.sort_by {|key, value| value}
   end
 
