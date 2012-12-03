@@ -1,13 +1,44 @@
-<div id="search">
-    <p>search for a repo</p>
-
-    <%= form_tag('repositories/create', :method => "post",
-                :remote => true,
-                :class => 'the_button') do %>
-    <%= text_field_tag "repo" %>
-    </br>
-    <%= submit_tag "Submit" %>
-    <% end %>
+<div class="container">
+	<div class="row-fluid">
+			<div class="span1"></div>
+			<div class="span5" id="header">
+				<h1>reposado</h1>
+				<p>visualizing engagement<br> in open source GitHub repos</p>
+			</div>
+			<div class="span1"></div>
+			<div class="span5" id="search">
+				 <%= form_tag('repositories/create', :method => "post",
+	                :remote => true,
+	                :class => 'the_button') do %>
+					    			<%= text_field_tag "repo" %>
+					    			<%= submit_tag "Search repos" %>
+	    		<% end %>
+			</div>
+		</div>
+	<div class="row-fluid">
+		<div class="span1"></div>
+		<div class="span5"></div>
+		<div class="span1"></div>
+		<div class="span5"></div>
+	</div>
 </div>
 
-<div id="pie"></div>
+<%= render :partial => 'recent_repos' %>
+
+<div class="container">
+	<div class="row-fluid">
+		<div class="span12">
+			<div id="pie"></div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span1"></div>
+			<div class="span10" id="footer">
+				<p>by <a href="http://github.com/arn-e" target="blank">arne</a>,
+					<a href="http://github.com/BrianJoyce" target="blank">brian</a>, <a href="http://github.com/joelanders" target="blank">joe</a>, &amp; <a href="http://github.com/malandrina" target="blank">laila</a>.</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+

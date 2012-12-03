@@ -4,7 +4,7 @@ feature "users can see a field for entering a GitHub repo to analyze" do
   scenario "user visits home page" do
     visit root_path
     page.should have_field "repo"
-    page.should have_button 'Submit'
+    page.should have_button 'Search repos'
   end
 end
 
@@ -15,7 +15,7 @@ feature "users are taken to the appropriate page after submitting GitHub repo fo
     scenario "user submits URL for a repo that is already in the database" do
       # visit root_path
       # fill_in 'repo', with: "https://github.com/rails/rails"
-      # click_button 'Submit'
+      # click_button 'Search repos'
       # current_path should eq root_path
       # page.should have_content "Rails"
     end
@@ -23,7 +23,7 @@ feature "users are taken to the appropriate page after submitting GitHub repo fo
     scenario "user submits URL for a repo that is not in the database" do
       # visit root_path
       # fill_in 'repo', with: "https://github.com/reposado/reposado"
-      # click_button 'Submit'
+      # click_button 'Search repos'
       # current_path should eq root_path
       # page.should have_content "We haven't analyzed that repo yet! Check back in 10."
     end
@@ -32,7 +32,7 @@ feature "users are taken to the appropriate page after submitting GitHub repo fo
   context "when GitHub repo URL is not valid" do
       # visit root_path
       # fill_in 'repo', with: "htt://github.com/jnicklas/capybara"
-      # click_button 'Submit'
+      # click_button 'Search repos'
       # current_path should eq root_path
       # page.should have_content "Please enter a valid URL or repo name"
   end
