@@ -2,7 +2,7 @@ module GithubDataProcessor
   def users_by_commits
     counts = Hash.new(0)
     # TO DO: break this out into separate method -LRW
-    commits.group(:user).count.each do |commit_name, count|
+    commits.group(:git_user).count.each do |commit_name, count|
       counts[commit_name] += count
     end
 
@@ -21,7 +21,7 @@ module GithubDataProcessor
   def users_by_comments
     counts = Hash.new(0)
     issues.each do |issue|
-      issue.comments.group(:user).count.each do |comment_name, count|
+      issue.comments.group(:git_user).count.each do |comment_name, count|
         counts[comment_name] += count
       end
     end
