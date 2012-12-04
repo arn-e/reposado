@@ -1,13 +1,70 @@
-<div id="search">
-    <p>enter github url</p>
 
-    <%= form_tag('repositories/create', :method => "post",
+<div class="container">
+	<div class="row-fluid">
+		<div class="span1"></div>
+		<div class="span5" id="header">
+			<%= image_tag "039_agave_bloom.png", { :height => 150 } %>
+			<h1>reposado</h1>
+			<p>visualizing engagement<br> in open source GitHub repos</p>
+		</div>
+		<div class="span1"></div>
+		<div class="span5" id="search">
+			 <%= form_tag('repositories/create', :method => "post",
                 :remote => true,
                 :class => 'the_button') do %>
-    <%= text_field_tag "repo" %>
-    </br>
-    <%= submit_tag "Submit" %>
-    <% end %>
+				    			<%= text_field_tag "repo" %>
+				    			<%= submit_tag "Search repos" %>
+    		<% end %>
+		</div>
+	</div>
 </div>
 
-<div id="pie"></div>
+<div class="container">
+	<div class="row-fluid">
+		<div class="span12">
+			<div id="pie"></div>
+		</div>
+	</div>
+</div>
+
+<div id="tabs">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span7"></div>
+			<ul>
+				<div class="span3">
+					<li><a href="#recent-repos">recently added</a></li>
+				</div>
+				<div class="span1">
+					<li><a href="#all-repos">all</a></li>
+				</div>
+				<div class="span1"></div>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="recent-repos">
+	<%= render :partial => 'recent_repos', :repos => @repos %>
+</div>
+
+<div id="all-repos">
+	<div class="container">
+	</div>
+</div>
+
+<div class="container">
+	<div class="row-fluid">
+		<div class="span12">
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span1"></div>
+			<div class="span10" id="footer">
+				<p>by <a href="http://github.com/arn-e" target="blank">arne</a>,
+					<a href="http://github.com/BrianJoyce" target="blank">brian</a>, <a href="http://github.com/joelanders" target="blank">joe</a>, &amp; <a href="http://github.com/malandrina" target="blank">laila</a>.</p>
+			</div>
+			<div class="span1"></div>
+		</div>
+	</div>
+</div>

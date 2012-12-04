@@ -1,6 +1,7 @@
 class RepositoriesController < ApplicationController
 
   def index
+    @repo_names = Repository.order("created_at DESC").limit(2).map { |repo| repo.name || "" }
   end
 
   def create
