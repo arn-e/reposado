@@ -42,14 +42,6 @@ ActiveRecord::Schema.define(:version => 20121204053923) do
     t.datetime "updated_at",                 :null => false
   end
 
-  create_table "github_users", :force => true do |t|
-    t.integer  "github_id"
-    t.text     "login"
-    t.string   "gravatar_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "issues", :force => true do |t|
     t.integer  "repository_id"
     t.string   "title"
