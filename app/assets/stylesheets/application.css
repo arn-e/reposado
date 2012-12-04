@@ -19,6 +19,12 @@ body {
   font-weight: normal;
 }
 
+img {
+  float: left;
+  max-height: 120px;
+  padding-right: 10%;
+}
+
 #header {
   margin: 0.6em 0 0 0.3em;
 }
@@ -36,6 +42,7 @@ body {
   font-size: 125%;
   font-weight: normal;
   line-height: 125%;
+  margin-left: 25%;
 }
 
 #search {
@@ -110,7 +117,6 @@ body {
 
 #repo-1 {
   background-color: #7279d8;
-  border: 1px solid #503030;
   border-radius: 6px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
