@@ -171,8 +171,8 @@ DEPENDENCIES
   factory_girl_rails
   faker
   jquery-rails
-  pg
   jquery-ui-rails
+  pg
   quiet_assets
   rails (= 3.2.9)
   rspec-rails
