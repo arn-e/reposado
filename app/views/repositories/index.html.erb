@@ -36,18 +36,19 @@
 	</div>
 </div>
 
-<div id="tabs">
-	<div class="container">
+
+<div class="container">
+	<div id="nav">
 		<div class="row-fluid">
 			<div class="span7"></div>
-			<ul>
-				<div class="span3">
+			<ul class="tabs">
+				<div class="span3" id="tab-1">
 					<li><a href="#recent-repos">recently added</a></li>
 				</div>
-				<div class="span1">
+				<div class="span1" id="tab-2">
 					<li><a href="#all-repos">all</a></li>
 				</div>
-				<div class="span1"></div>
+				<!-- <div class="span1"></div> -->
 			</ul>
 		</div>
 	</div>
@@ -59,6 +60,9 @@
 
 <div id="all-repos">
 	<div class="container">
+		<div class="row-fluid">
+			<h1>hiiiiiiii</h1>
+		</div>
 	</div>
 </div>
 
@@ -77,3 +81,5 @@
 		</div>
 	</div>
 </div>
+
+<%= javascript_include_tag "tabs.js" %>
