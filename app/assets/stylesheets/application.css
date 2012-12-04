@@ -16,6 +16,7 @@ body {
   background-color: #fafafa;
   color: #503030;
   font-family: 'Josefin Sans', sans-serif;
+  font-weight: normal;
 }
 
 #header {
@@ -56,10 +57,40 @@ body {
   font-size: 225%;
   font-weight: normal;
   line-height: 100%;
+  text-align: right;
+}
+
+#repos h2 {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 200%;
+  font-weight: normal;
+  line-height: 125%;
+  padding: 0 2% 0 15%;
 }
 
 #repos p {
+  font-family: "Open Sans", sans-serif;
+  padding: 0 2% 0 10%;
+}
 
+#library-link {
+  background-color: #fafafa;
+}
+
+#library-link h1 {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 110%;
+  line-height: 125%;
+  font-weight: normal;
+  color: #503030;
+  text-align: left;
+}
+
+#library-link a {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 200%;
+  color: #503030;
+  text-decoration: none;
 }
 
 #footer {
@@ -78,39 +109,52 @@ body {
 }
 
 #repo-1 {
-  background-color: #D8C5BC;
+  background-color: #7279d8;
+  border: 1px solid #503030;
   border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
   height: 85%;
   margin: 2% 0 2% 0;
 }
 
 #repo-2 {
-  background-color: #D8C5BC;
+  background-color: #a6cfe8;
   border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
   margin: 2% 0 2% 0;
 }
 
 #repo-3 {
-  background-color: #D8C5BC;
+  background-color: #b593eb;
   border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
   margin: 2% 0 2% 0;
 }
 
 #repo-4 {
-  background-color: #D8C5BC;
-  border-radius: 6px;
+  background-color: #AEB3ec;
+  border-radius: 6px; 
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
   margin: 2% 0 2% 0;
 }
 
 #repo-5 {
-  background-color: #D8C5BC;
+  background-color: #4c57d8;
   border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
   margin: 2% 0 2% 0;
 }
 
 #repo-6 {
-  background-color: #D8C5BC;
+  background-color: #c4aaeb;
   border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
   margin: 2% 0 2% 0;
 }
 
