@@ -98,11 +98,11 @@ class Repository < ActiveRecord::Base
       end
       if commit["committer"] != nil
         if commit["committer"]["login"] == nil
-          @new_commit.user = commit["commit"]["committer"]["name"]
+          @new_commit.git_user = commit["commit"]["committer"]["name"]
         elsif commit["committer"]["login"] != nil
-          @new_commit.user = commit["committer"]["login"]
+          @new_commit.git_user = commit["committer"]["login"]
         else
-          @new_commit.user = " "
+          @new_commit.git_user = " "
         end
         @new_commit.date = DateTime.parse(commit["commit"]["committer"]["date"])
         @new_commit.save!
@@ -131,9 +131,9 @@ class Repository < ActiveRecord::Base
 
   #     if data_type == "comments"
   #       @new_issue_data.body = issue_data["body"]
-  #       @new_issue_data.user = issue_data["user"]["login"]
+  #       @new_issue_dait.git_user = issue_data["user"]["login"]
   #     elsif data_type == "events"
-  #       @new_issue_data.user = issue_data["actor"]["login"]
+  #       @new_issue_dait.git_user = issue_data["actor"]["login"]
   #       @new_issue_data.status = issue_data["event"]
   #     end
   #     @new_issue_data.date = Date.strptime(issue_data["created_at"])

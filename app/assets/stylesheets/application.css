@@ -12,15 +12,65 @@
  *= require_tree .
  */
 
-body {background-color: #a0a0d0;
-    color: #503030;
-    font-family: 'Josefin Sans', sans-serif;
-    font-size: 150%;}
-
-#brand h1 {
+body {
+  background-color: #fafafa;
+  color: #503030;
   font-family: 'Josefin Sans', sans-serif;
-  font-size: 60px;
   font-weight: normal;
+}
+
+img {
+  float: left;
+  max-height: 120px;
+  padding-right: 10%;
+}
+
+ul {
+}
+
+li {
+  font-size: 150%;
+  list-style: none;
+}
+
+ul a {
+  color: #503030;
+  font-family: "Josefin Sans", sans-serif;
+  text-decoration: none;
+}
+
+.ui-tabs { position: relative; padding: .2em; zoom: 1; }
+.ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
+.ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
+.ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; }
+.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
+.ui-tabs .ui-tabs-hide { display: none; }
+
+#header {
+  margin: 0.6em 0 0 0.3em;
+}
+
+#header h1 {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 450%;
+  font-weight: normal;
+  line-height: 100%;
+  margin-bottom: 2%;
+}
+
+#header p {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 125%;
+  font-weight: normal;
+  line-height: 125%;
+  margin-left: 25%;
+}
+
+#search {
+  padding: 9.5% 7% 0 0;
 }
 
 #search p {
@@ -29,8 +79,144 @@ body {background-color: #a0a0d0;
   font-weight: normal;
 }
 
+#tabs {
+  background-color: #e0e0e0;
+}
+
+#tabs h1 {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 150%;
+  font-weight: normal;
+  text-align: right;
+}
+
+#recent-repos {
+}
+
+#all-repos {
+  display: none;
+}
+
+#repos {
+  background-color: #e0e0e0;
+}
+
+#repos h1 {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 225%;
+  font-weight: normal;
+  line-height: 100%;
+  text-align: right;
+}
+
+#repos h2 {
+  color: #503030;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 200%;
+  font-weight: normal;
+  line-height: 125%;
+  padding: 0 2% 0 15%;
+}
+
+#repos a {
+  color: #503030;
+  text-decoration: none;
+}
+
+#repos p {
+  font-family: "Open Sans", sans-serif;
+  padding: 0 2% 0 10%;
+}
+
+#library-link {
+  background-color: #fafafa;
+}
+
+#library-link h1 {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 110%;
+  line-height: 125%;
+  font-weight: normal;
+  color: #503030;
+  text-align: left;
+}
+
+#library-link a {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 200%;
+  color: #503030;
+  text-decoration: none;
+}
+
+#footer {
+  font-size: 80%;
+  margin: -1em 0.5em 0 0;
+  text-align: right;
+}
+
+#footer a {
+  text-decoration: none;
+  color: #503030;
+}
+
+#footer a:hover {
+  border-bottom: 1px dotted #503030;
+}
+
+#repo-1 {
+  background-color: #7279d8;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  height: 85%;
+  margin: 2% 0 2% 0;
+}
+
+#repo-2 {
+  background-color: #a6cfe8;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  margin: 2% 0 2% 0;
+}
+
+#repo-3 {
+  background-color: #b593eb;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  margin: 2% 0 2% 0;
+}
+
+#repo-4 {
+  background-color: #AEB3ec;
+  border-radius: 6px; 
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  margin: 2% 0 2% 0;
+}
+
+#repo-5 {
+  background-color: #4c57d8;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  margin: 2% 0 2% 0;
+}
+
+#repo-6 {
+  background-color: #c4aaeb;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  margin: 2% 0 2% 0;
+}
+
 .container {
-  width: auto;
+  width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  *zoom: 1;
 }
 
 .row-fluid {
@@ -111,10 +297,3 @@ body {background-color: #a0a0d0;
     width: 5.982905982905983%;
     *width: 5.929714493544281%;
   }
-
-#header {font-size: 300%;
-  margin: 0.6em 0 0 0.3em;}
-#footer {font-size: 80%;
-  margin: -1em 0.5em 0 0;
-  text-align: right;}
-#search {margin: 0 0 0 1em;}

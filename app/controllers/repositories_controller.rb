@@ -1,11 +1,12 @@
 class RepositoriesController < ApplicationController
 
   def index
+    @repo_names = Repository.order("created_at DESC").limit(2).map { |repo| repo.name || "" }
   end
 
   def create
     @repo = Repository.from_url(params[:repo])
-    @data = @repo.collect_data([@repo.users_by_commits, @repo.users_by_comments]).to_json
+    @data = @repo.collect_data([@repo.users_by_commits, @repo.users_by_comments, @repo.relevant_words]).to_json
     @repo.chart_data = @data
     @repo.save
     # @exists = false

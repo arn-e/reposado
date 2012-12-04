@@ -2,7 +2,7 @@ module GithubDataProcessor
   def users_by_commits
     counts = Hash.new(0)
     # TO DO: break this out into separate method -LRW
-    commits.group(:user).count.each do |commit_name, count|
+    commits.group(:git_user).count.each do |commit_name, count|
       counts[commit_name] += count
     end
 
@@ -21,7 +21,7 @@ module GithubDataProcessor
   def users_by_comments
     counts = Hash.new(0)
     issues.each do |issue|
-      issue.comments.group(:user).count.each do |comment_name, count|
+      issue.comments.group(:git_user).count.each do |comment_name, count|
         counts[comment_name] += count
       end
     end
@@ -103,14 +103,25 @@ module GithubDataProcessor
     end
 
     score = TfIdf.new(document)
-    combined = Hash.new(0)  
-    score.tf_idf.each do |i| 
+    combined = Hash.new(0)
+    score.tf_idf.each do |i|
       i.each do |key, value|
         (combined[key] = value) if (value > combined[key])
       end
     end
-    
+
     combined = combined.sort_by {|key, value| value}
+    result = []
+
+    combined.each do |word_score|
+      single_score = (['word','score']).zip(word_score).flatten
+      single_hash = Hash.new
+      single_hash[single_score[0]] = single_score[1]
+      single_hash[single_score[2]] = single_score[3]
+      result << single_hash
+    end
+
+    { :relevant_words => result }
   end
 
   def activity_by_week

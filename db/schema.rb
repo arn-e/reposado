@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203025445) do
+ActiveRecord::Schema.define(:version => 20121204053923) do
 
   create_table "comments", :force => true do |t|
     t.integer  "issue_id"
-    t.string   "user",       :default => "", :null => false
+    t.string   "git_user",   :default => "", :null => false
     t.text     "body"
     t.datetime "date"
     t.datetime "created_at",                 :null => false
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(:version => 20121203025445) do
   end
 
   create_table "commits", :force => true do |t|
-    t.string   "user"
+    t.string   "git_user"
     t.datetime "date"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
@@ -35,11 +35,19 @@ ActiveRecord::Schema.define(:version => 20121203025445) do
 
   create_table "events", :force => true do |t|
     t.datetime "date"
-    t.string   "user"
+    t.string   "git_user"
     t.string   "status",     :default => "", :null => false
     t.integer  "issue_id"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "github_users", :force => true do |t|
+    t.integer  "github_id"
+    t.text     "login"
+    t.string   "gravatar_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "issues", :force => true do |t|
@@ -54,11 +62,11 @@ ActiveRecord::Schema.define(:version => 20121203025445) do
   end
 
   create_table "repositories", :force => true do |t|
-    t.string   "url",                       :default => "", :null => false
-    t.string   "name",                      :default => "", :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.text     "chart_data", :limit => 255
+    t.string   "url",        :default => "", :null => false
+    t.string   "name",       :default => "", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.text     "chart_data"
   end
 
 end
