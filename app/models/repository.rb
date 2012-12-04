@@ -35,8 +35,18 @@ class Repository < ActiveRecord::Base
   def self.issues_from_github(repo_path, repo_id)
     open_data         = GithubHandler.query_github(repo_path, "open")
     closed_data       = GithubHandler.query_github(repo_path, "closed")
-    open_data.each   {|issue| @issue = Issue.from_json(issue, repo_id)  }
-    closed_data.each {|issue| @issue = Issue.from_json(issue, repo_id)  }
+
+    threads = []
+
+    open_data.each do |issue|
+      Thread.new { Issue.from_json(issue, repo_id) }
+    end
+
+    closed_data.each do |issue|
+      Thread.new { Issue.from_json(issue, repo_id) }
+    end
+
+    threads.join #waits for stuff to finish, bubbles exceptions
 
     # update_issue_data(open_data, repo_id)
     # update_issue_data(closed_data, repo_id)
