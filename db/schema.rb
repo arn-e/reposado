@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203025445) do
+ActiveRecord::Schema.define(:version => 20121203033657) do
 
   create_table "comments", :force => true do |t|
     t.integer  "issue_id"
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(:version => 20121203025445) do
     t.integer  "issue_id"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "github_users", :force => true do |t|
+    t.integer  "github_id"
+    t.text     "login"
+    t.string   "gravatar_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "issues", :force => true do |t|
