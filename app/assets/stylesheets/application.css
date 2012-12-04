@@ -15,58 +15,65 @@
 body {
   background-color: #fafafa;
   color: #503030;
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: normal;
 }
 
-img {
-  float: left;
-  max-height: 120px;
-  padding-right: 10%;
-}
-
 ul {
+  margin-bottom: 0px;
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
 }
 
 li {
-  font-size: 150%;
+  font-size: 100%;
   list-style: none;
 }
 
 ul a {
   color: #503030;
-  font-family: "Josefin Sans", sans-serif;
   text-decoration: none;
 }
 
-.ui-tabs { position: relative; padding: .2em; zoom: 1; }
-.ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; }
-.ui-tabs .ui-tabs-nav li { list-style: none; float: left; position: relative; top: 1px; margin: 0 .2em 1px 0; border-bottom: 0 !important; padding: 0; white-space: nowrap; }
-.ui-tabs .ui-tabs-nav li a { float: left; padding: .5em 1em; text-decoration: none; }
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 1px; }
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
-.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; }
-.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
-.ui-tabs .ui-tabs-hide { display: none; }
+ul #tab-1, #tab-2 {
+  height: 100%;
+  background-color: #e0e0e0;
+  border-radius: 8px 8px 0px 0px;
+  -moz-border-radius: 8px 8px 0px 0px;
+  -webkit-border-radius: 8px 8px 0px 0px;
+  padding-top: .8%;
+  margin: 5px 5px 0px 0px;
+}
 
 #header {
   margin: 0.6em 0 0 0.3em;
 }
 
 #header h1 {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 450%;
+  font-family: 'Carter One', sans-serif;
+  font-size: 350%;
   font-weight: normal;
-  line-height: 100%;
+  line-height: 110%;
   margin-bottom: 2%;
 }
 
+#header a {
+  color: #503030;
+  text-decoration: none;
+}
+
 #header p {
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 125%;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 90%;
   font-weight: normal;
   line-height: 125%;
-  margin-left: 25%;
+  text-align: left;
+}
+
+#header img {
+  float: left;
+  max-height: 150px;
+  padding-right: 10%;
 }
 
 #search {
@@ -74,17 +81,13 @@ ul a {
 }
 
 #search p {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Carter One', sans-serif;
   font-size: 24px;
   font-weight: normal;
 }
 
-#tabs {
-  background-color: #e0e0e0;
-}
-
 #tabs h1 {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Carter One", sans-serif;
   font-size: 150%;
   font-weight: normal;
   text-align: right;
@@ -95,6 +98,7 @@ ul a {
 
 #all-repos {
   display: none;
+  background-color: #e0e0e0;
 }
 
 #repos {
@@ -102,7 +106,7 @@ ul a {
 }
 
 #repos h1 {
-  font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Carter One', sans-serif;
   font-size: 225%;
   font-weight: normal;
   line-height: 100%;
@@ -111,16 +115,20 @@ ul a {
 
 #repos h2 {
   color: #503030;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 200%;
+  font-family: 'Carter One', sans-serif;
+  font-size: 2em;
   font-weight: normal;
   line-height: 125%;
-  padding: 0 2% 0 15%;
+  text-align: center;
 }
 
 #repos a {
   color: #503030;
   text-decoration: none;
+}
+
+#repos a:hover {
+  background-color: white;
 }
 
 #repos p {
@@ -133,7 +141,7 @@ ul a {
 }
 
 #library-link h1 {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Carter One", sans-serif;
   font-size: 110%;
   line-height: 125%;
   font-weight: normal;
@@ -142,7 +150,7 @@ ul a {
 }
 
 #library-link a {
-  font-family: "Josefin Sans", sans-serif;
+  font-family: "Carter One", sans-serif;
   font-size: 200%;
   color: #503030;
   text-decoration: none;

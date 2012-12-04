@@ -10,19 +10,19 @@
 			<div class="span1"></div>
 				<%= link_to(repositories_create_path(@repo_names[0])) do %>
 					<div class="span3" id="repo-1">
-						<h2><%= @repo_names[0] %></h2>
+						<h2><%= @repo_names[0].slice(/\/(\w+$)/, 1) %></h2>
 					</div>
 				<% end %>
 			<div class="span1"></div>
 				<%= link_to(repositories_create_path(@repo_names[1])) do %>
 					<div class="span3" id="repo-2">
-						<h2><%= @repo_names[1] %></h2>
+						<h2><%= @repo_names[1].slice(/\/(\w+$)/, 1) %></h2>
 					</div>
 				<% end %>
 			<div class="span1"></div>
 				<%= link_to(repositories_create_path(@repo_names[2])) do %>
 					<div class="span3" id="repo-3">
-						<h2><%= @repo_names[2] %></h2>
+						<h2><%= "nil" || @repo_names[2].slice(/\/(\w+$)/, 1) %></h2>
 					</div>
 				<% end %>
 		</div>
@@ -31,22 +31,19 @@
 			<div class="span1"></div>
 				<%= link_to(repositories_create_path(@repo_names[3])) do %>
 					<div class="span3" id="repo-4">
-						<h2><%= @repo_names[3] %></h2>
-						<p> testing testing</p>
+						<h2><%= "nil" || @repo_names[3].slice(/\/(\w+$)/, 1) %></h2>
 					</div>
 				<% end %>
 			<div class="span1"></div>
 				<%= link_to(repositories_create_path(@repo_names[4])) do %>
 					<div class="span3" id="repo-5">
-						<h2><%= @repo_names[4] %></h2>
-						<p> testing testing</p>
+						<h2><%= "nil" || @repo_names[4].slice(/\/(\w+$)/, 1) %></h2>
 					</div>
 				<% end %>
 			<div class="span1"></div>
 				<%= link_to(repositories_create_path(@repo_names[5])) do %>
 					<div class="span3" id="repo-6">
-						<h2><%= @repo_names[5] %></h2>
-						<p> testing testing</p>
+						<h2><%= "nil" || @repo_names[5].slice(/\/(\w+$)/, 1) %></h2>
 					</div>
 				<% end %>
 		</div>
