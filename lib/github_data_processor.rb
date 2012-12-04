@@ -103,14 +103,25 @@ module GithubDataProcessor
     end
 
     score = TfIdf.new(document)
-    combined = Hash.new(0)  
-    score.tf_idf.each do |i| 
+    combined = Hash.new(0)
+    score.tf_idf.each do |i|
       i.each do |key, value|
         (combined[key] = value) if (value > combined[key])
       end
     end
-    
+
     combined = combined.sort_by {|key, value| value}
+    result = []
+
+    combined.each do |word_score|
+      single_score = (['word','score']).zip(word_score).flatten
+      single_hash = Hash.new
+      single_hash[single_score[0]] = single_score[1]
+      single_hash[single_score[2]] = single_score[3]
+      result << single_hash
+    end
+
+    { :relevant_words => result }
   end
 
   def activity_by_week
