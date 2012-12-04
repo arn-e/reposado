@@ -4,7 +4,7 @@ gem 'rails', '3.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-gem 'sqlite3'
+
 gem 'tf_idf'
 
 group :test do
@@ -19,6 +19,7 @@ group :development, :test do
   gem 'thin'
   gem 'faker'
   gem 'factory_girl_rails'
+  gem 'sqlite3'
 end
 
 group :production do
