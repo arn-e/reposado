@@ -68,11 +68,17 @@ img {
 }
 
 #repos h2 {
+  color: #503030;
   font-family: 'Josefin Sans', sans-serif;
   font-size: 200%;
   font-weight: normal;
   line-height: 125%;
   padding: 0 2% 0 15%;
+}
+
+#repos a {
+  color: #503030;
+  text-decoration: none;
 }
 
 #repos p {
