@@ -1,7 +1,4 @@
 Reposado::Application.routes.draw do
-  resources :github_users
-
-
   root :to => "repositories#index"
   match "repositories/create" => 'repositories#create', :method => :post
 

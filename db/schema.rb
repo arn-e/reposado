@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203025445) do
+ActiveRecord::Schema.define(:version => 20121204020847) do
 
   create_table "comments", :force => true do |t|
     t.integer  "issue_id"
@@ -42,6 +42,14 @@ ActiveRecord::Schema.define(:version => 20121203025445) do
     t.datetime "updated_at",                 :null => false
   end
 
+  create_table "github_users", :force => true do |t|
+    t.integer  "github_id"
+    t.text     "login"
+    t.string   "gravatar_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "issues", :force => true do |t|
     t.integer  "repository_id"
     t.string   "title"
@@ -54,11 +62,11 @@ ActiveRecord::Schema.define(:version => 20121203025445) do
   end
 
   create_table "repositories", :force => true do |t|
-    t.string   "url",                       :default => "", :null => false
-    t.string   "name",                      :default => "", :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.text     "chart_data", :limit => 255
+    t.string   "url",        :default => "", :null => false
+    t.string   "name",       :default => "", :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.text     "chart_data"
   end
 
 end

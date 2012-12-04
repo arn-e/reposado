@@ -4,7 +4,7 @@ gem 'rails', '3.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-gem 'sqlite3'
+
 gem 'tf_idf'
 
 group :test do
@@ -12,15 +12,19 @@ group :test do
   gem 'database_cleaner'
 end
 
+gem 'thin'
 group :development, :test do
   gem 'shoulda'
   gem 'rspec-rails'
   gem 'quiet_assets'
-  gem 'thin'
   gem 'faker'
   gem 'factory_girl_rails'
+  gem 'sqlite3'
 end
 
+group :production do
+  gem 'pg'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
