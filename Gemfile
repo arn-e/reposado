@@ -12,11 +12,11 @@ group :test do
   gem 'database_cleaner'
 end
 
+gem 'thin'
 group :development, :test do
   gem 'shoulda'
   gem 'rspec-rails'
   gem 'quiet_assets'
-  gem 'thin'
   gem 'faker'
   gem 'factory_girl_rails'
   gem 'sqlite3'
