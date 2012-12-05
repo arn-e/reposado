@@ -6,10 +6,11 @@ gem 'rails', '3.2.9'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'tf_idf'
-
+gem 'delayed_job_active_record'
 group :test do
   gem 'capybara', '1.1.2'
   gem 'database_cleaner'
+  gem 'simplecov'
 end
 
 gem 'thin'
@@ -20,6 +21,8 @@ group :development, :test do
   gem 'faker'
   gem 'factory_girl_rails'
   gem 'sqlite3'
+  gem 'vcr'
+  gem 'fakeweb'
 end
 
 group :production do
