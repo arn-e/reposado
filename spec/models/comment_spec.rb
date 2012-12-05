@@ -7,4 +7,9 @@ describe Comment do
   it { should validate_presence_of :date }
   it { should validate_presence_of :body }
 
+  describe '' do
+    context '' do
+    end
+  end
+
 end

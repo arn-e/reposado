@@ -5,7 +5,6 @@ class Issue < ActiveRecord::Base
   include GithubDataProcessor
 
   belongs_to :repository
-  # has_many :commits
   has_many :comments
   has_many :events
   validates_presence_of :title
@@ -30,21 +29,15 @@ class Issue < ActiveRecord::Base
     puts "*************************"
     comments = GithubHandler.query_github_issue_data(@issue.repository.name, @issue.git_issue_number, "comments")
 
-    #query API for issue comments
-    #receive parsed JSON
-    #create Comment for each element of parsed JSON
     if (comments.class == Array && comments != []) || (comments.class == Hash && comments["message"] != "Not Found")
-      # unless (comments["message"] == "Not Found")
         puts "*************************"
         puts "COMMENTS: #{comments}"
         puts "*************************"
         comments.each do |comment|
-          # unless (comments["message"] == "Not Found")
           @comment          = Comment.from_json(comment)
           @comment.issue_id = @issue.id
           @comment.save
         end
-      # end
     end
   end
 

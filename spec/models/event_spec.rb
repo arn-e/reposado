@@ -6,4 +6,10 @@ describe Event do
   it { should validate_presence_of :status }
   it { should validate_presence_of :date }
   it { should validate_presence_of :user }
+
+  describe '' do
+    context '' do
+    end
+  end
+  
 end
