@@ -13,19 +13,15 @@ class Repository < ActiveRecord::Base
   validates_presence_of :name, :url
 
   def self.from_url(url)
-    full_url    = url
     repo_path   = URI.parse(url).path
     # @repo_exists = Repository.find_by_url(full_url)
     # return @repo_exists if @repo_exists
     @repo       = Repository.new
-    @repo.url   = full_url
+    @repo.url   = url
     @repo.name  = repo_path
     @repo.save!
     repo_id     = @repo.id
     issues_from_github(repo_path, repo_id)
-    #commits_from_github(repo_path, repo_id)
-    # collect_commits(repo_path, repo_id)
-    # collect_issues(repo_path, Repository.last.id)
     collect_commits(repo_path, repo_id)
     @repo
   end
