@@ -1,0 +1,24 @@
+// check to see if the repository has completed being cached
+// if it has, render it using Joe's fancy-schmancy D3 stuff
+// otherwise, sleep and try again in 5 seconds
+
+function loadRepoData(github_owner, github_name) {
+  $.ajax({
+    url: 'repositories/' + github_owner + '/' + github_name + '.json',
+    success: function(data) {
+      var draw = false;
+      draw = (data != null) && (data.chart_data != null);
+      if (draw) {
+        console.log(data);
+        draw_pie($.parseJSON(data.chart_data));
+      } else {
+        setTimeout(function(){ loadRepoData(github_owner, github_name) }, 5000);
+      }
+    },
+    error: function(jqXHR) {
+      // figure out what to do!
+    }
+  });
+}
+
+loadRepoData('<%= @github_owner %>', '<%= @github_name %>');
