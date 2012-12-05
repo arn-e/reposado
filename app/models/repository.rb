@@ -39,11 +39,11 @@ class Repository < ActiveRecord::Base
     threads = []
 
     open_data.each do |issue|
-      Thread.new { Issue.from_json(issue, repo_id) }
+      threads << Thread.new { Issue.from_json(issue, repo_id) }
     end
 
     closed_data.each do |issue|
-      Thread.new { Issue.from_json(issue, repo_id) }
+      threads << Thread.new { Issue.from_json(issue, repo_id) }
     end
 
     threads.join #waits for stuff to finish, bubbles exceptions
