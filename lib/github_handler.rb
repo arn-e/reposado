@@ -27,7 +27,6 @@ module GithubHandler
 
   def self.query_github_branches(repo)
     url = "https://api.github.com/repos#{repo}/branches"
-    puts "*********** URL::: #{url}"
     query_api(url)
   end
 

@@ -6,8 +6,7 @@ class RepositoriesController < ApplicationController
 
   def create
     @repo = Repository.from_url(params[:repo])
-    @data = @repo.collect_data([@repo.users_by_commits, @repo.users_by_comments, @repo.relevant_words]).to_json
-    @repo.chart_data = @data
+    @data = @repo.delay.collect_data([@repo.users_by_commits, @repo.users_by_comments, @repo.relevant_words]).to_json
     @repo.save
     @exists = false
 
