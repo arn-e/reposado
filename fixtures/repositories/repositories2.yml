@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://api.github.com:443/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      accept:
+      - ! '*/*'
+      user-agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx
+      date:
+      - Wed, 05 Dec 2012 02:03:43 GMT
+      content-type:
+      - application/json; charset=utf-8
+      connection:
+      - close
+      status:
+      - 200 OK
+      x-github-media-type:
+      - github.beta
+      cache-control:
+      - max-age=0, private, must-revalidate
+      x-ratelimit-remaining:
+      - '57'
+      x-ratelimit-limit:
+      - '60'
+      x-content-type-options:
+      - nosniff
+      etag:
+      - ! '"23a4fb2f534b4b8cc020d72de5b984af"'
+      content-length:
+      - '1051'
+    body:
+      encoding: US-ASCII
+      string: ! '{"user_repositories_url":"/users/{user}/repos{?type,page,per_page,sort}","repository_search_url":"/legacy/repos/search/{keyword}{?language,start_page}","starred_gists_url":"/gists/starred","emails_url":"/user/emails","starred_url":"/user/starred{/owner}{/repo}","current_user_repositories_url":"/user/repos{?type,page,per_page,sort}","user_organizations_url":"/user/orgs","organization_repositories_url":"/orgs/{org}/repos/{?type,page,per_page,sort}","emojis_url":"/emojis","user_url":"/users/{user}","team_url":"/teams","repository_url":"/repos/{owner}/{repo}","notifications_url":"/notifications","issue_search_url":"/legacy/issues/search/{owner}/{repo}/{state}/{keyword}","hub_url":"/hub","user_search_url":"/legacy/user/search/{keyword}","organization_url":"/orgs/{org}","keys_url":"/user/keys","issues_url":"/issues","gists_url":"/gists{/gist_id}","events_url":"/events","public_gists_url":"/gists/public","current_user_url":"/user","rate_limit_url":"/rate_limit","following_url":"/user/following{/target}","authorizations_url":"/authorizations"}'
+    http_version: '1.1'
+  recorded_at: Wed, 05 Dec 2012 02:03:43 GMT
+recorded_with: VCR 2.3.0

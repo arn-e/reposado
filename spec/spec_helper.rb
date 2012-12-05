@@ -1,6 +1,20 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'rubygems'
+require 'net/http'
+require 'net/https'
+require 'uri'
 require 'capybara/rspec'
 require 'factory_girl_rails'
+require 'test/unit'
+require 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'fixtures/repositories'
+  c.hook_into :fakeweb
+  c.debug_logger = File.open("vcr_debug_log.txt", 'w')
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
@@ -14,10 +28,13 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
 
-  config.after(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
+  # config.after(:suite) do
+  #   DatabaseCleaner.clean_with(:truncation)
+  # end
 
+  # config.after(:each) do
+  #   DatabaseCleaner.clean
+  # end
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

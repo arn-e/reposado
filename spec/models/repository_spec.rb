@@ -10,47 +10,68 @@ describe Repository do
   context "initialization" do
     it "has the correct name" do
       @repo = FactoryGirl.build(:repository)
-      @repo.name.should eq "Rails"
+      @repo.name.should eq "/pengwynn/octokit"
     end
 
     it "has the correct url" do
       @repo = FactoryGirl.build(:repository)
-      @repo.url.should eq "https://github.com/rails/rails"
+      @repo.url.should eq "https://github.com/pengwynn/octokit"
     end
 
     describe ".from_url" do
-      it "saves a new Repository to the database" do
-        # Repository should_receive(:from_url) and respond_with (<file>)
-        # Repository.from_url()
+      before(:all) do
+        VCR.use_cassette('repositories') do
+          Repository.from_url("https://github.com/reposado/reposado")
+        end
+        @repo = Repository.find_by_name('/reposado/reposado')
+      end
+
+      it "creates a new Repository" do
+        @repo.should_not be_nil
       end
 
       it "correctly sets the name of the Repository" do
+        @repo.name.should eq "/reposado/reposado"
       end
 
       it "correctly sets the URL of the Repository" do
+        @repo.url.should eq "https://github.com/reposado/reposado"
       end
 
       it "returns cached data if the input URL is already in the database" do
+        expect {
+          Repository.from_url("https://github.com/reposado/reposado")
+          }.to change{ Repository.count }.by(0)
+      end
+
+      it "saves a new Repository if it doesn't already exist" do
+        Repository.stub(:issues_from_github)
+        Repository.stub(:collect_commits)
+
+        expect {
+          Repository.from_url("https://github.com/rails/rails")
+          }.to change{ Repository.count }.by(1)
       end
 
       it "collects child Issues" do
+        @repo.issues.length.should eq 1
       end
 
       it "collects child Commits" do
+        @repo.commits.length.should > 1
       end
-
     end
   end
 
   context "data processing" do
-    5.times do
-      FactoryGirl.create(:fully_loaded_issue)
-    end
+    # 5.times do
+    #   FactoryGirl.create(:fully_loaded_issue)
+    # end
 
-    FactoryGirl.create(:repository_with_commits)
+    # FactoryGirl.create(:repository_with_commits)
 
-    let (:repo) { Repository.first }
-    let (:repo_with_commits) { Repository.last}
+    let (:repo_with_commits) { FactoryGirl.create(:repository_with_commits) }
+    # let (:repo_with_commits) { Repository.last}
 
     describe "#users_by_commits" do
       it "has number of user commits" do
@@ -65,20 +86,21 @@ describe Repository do
 
     describe "#users_by_comments" do
       it "has number of user comments" do
-        @data = repo.users_by_comments
-        @data[:users_by_comments].first["name"].should eq "octocat"
-        @data[:users_by_comments].first["num"].should eq 6
+        pending
+        # @data = repo_with_comments.users_by_comments
+        # @data[:users_by_comments].first["name"].should eq "octocat"
+        # @data[:users_by_comments].first["num"].should eq 6
 
-        @data[:users_by_comments].last["name"].should eq "user2"
-        @data[:users_by_comments].last["num"].should eq 7
+        # @data[:users_by_comments].last["name"].should eq "user2"
+        # @data[:users_by_comments].last["num"].should eq 7
       end
     end
 
     describe "#to_json" do
       it "correctly formats a hash" do
-        @data = repo.users_by_comments
+        @data = repo_with_commits.users_by_commits
         @json = @data.to_json
-        @json.should eq "{\"users_by_comments\":[{\"name\":\"octocat\",\"num\":6},{\"name\":\"user2\",\"num\":7}]}"
+        @json.should eq "{\"committers\":[{\"name\":\"octocat\",\"num\":6},{\"name\":\"user2\",\"num\":4}]}"
       end
     end
   end

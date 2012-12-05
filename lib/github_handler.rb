@@ -7,6 +7,12 @@ module GithubHandler
 
   # refactor
 
+  def self.track_url(url)
+    # f = open('/Users/apprentice/Desktop/urls.txt', 'a')
+    # f.puts url
+    # f.close
+  end
+
   def self.query_github(repo, state, page_num = 1)
     url = "https://api.github.com/repos#{repo}/issues?state=#{state}&page=#{page_num}&per_page=100"
     query_api(url)
