@@ -9,7 +9,7 @@ class RepositoriesController < ApplicationController
     @data = @repo.collect_data([@repo.users_by_commits, @repo.users_by_comments, @repo.relevant_words]).to_json
     @repo.chart_data = @data
     @repo.save
-    # @exists = false
+    @exists = false
 
     if true# placeholder for cached? or something like that
       #render :json => @data_json # the dummy data above

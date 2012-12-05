@@ -18,7 +18,7 @@ module GithubHandler
   end
 
   def self.query_github_commits(repo, branch_name, branch_start_sha)
-    # url = 'https://api.github.com/repos/twitter/bootstrap/commits?per_page=100&sha=d335adf644b213a5ebc9cee3f37f781ad55194ef' 
+    # url = 'https://api.github.com/repos/twitter/bootstrap/commits?per_page=100&sha=d335adf644b213a5ebc9cee3f37f781ad55194ef'
     url = "https://api.github.com/repos#{repo}/commits?per_page=100&sha=#{branch_start_sha}"
     request, http = self.set_connection_parameters(url, 443)
     response = http.request(request)
@@ -27,6 +27,7 @@ module GithubHandler
 
   def self.query_github_branches(repo)
     url = "https://api.github.com/repos#{repo}/branches"
+    puts "*********** URL::: #{url}"
     query_api(url)
   end
 

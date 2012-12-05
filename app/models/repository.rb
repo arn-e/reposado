@@ -67,7 +67,7 @@ class Repository < ActiveRecord::Base
 
   def self.collect_commits(repo_path, repo_id)
     branches = collect_branches(repo_path)
-
+    puts "************************** #{branches.inspect}"
     branches.each do |branch|
       branch_name, branch_start_sha = branch["name"], branch["commit"]["sha"]
       commit_data = collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
