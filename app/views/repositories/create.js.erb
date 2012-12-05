@@ -2,7 +2,7 @@
 // if it has, render it using Joe's fancy-schmancy D3 stuff
 // otherwise, sleep and try again in 5 seconds
 
-function loadRepoData(github_owner, github_name) {
+function loadRepoData(github_owner, github_name, attempt) {
   $.ajax({
     url: 'repositories/' + github_owner + '/' + github_name + '.json',
     success: function(data) {
@@ -12,13 +12,17 @@ function loadRepoData(github_owner, github_name) {
         console.log(data);
         draw_pie($.parseJSON(data.chart_data));
       } else {
-        setTimeout(function(){ loadRepoData(github_owner, github_name) }, 5000);
+        if (attempt < 63) { // Brian hates even numbers, but we want to wait about 5 minutes
+          setTimeout(function(){ loadRepoData(github_owner, github_name, attempt+1) }, 5000); // try again in 5 secs
+        } else {
+          // ERROR: figure out what to do!
+        }
       }
     },
     error: function(jqXHR) {
-      // figure out what to do!
+      // ERROR: figure out what to do!
     }
   });
 }
 
-loadRepoData('<%= @github_owner %>', '<%= @github_name %>');
+loadRepoData('<%= @github_owner %>', '<%= @github_name %>', 1);
