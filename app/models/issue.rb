@@ -24,10 +24,10 @@ class Issue < ActiveRecord::Base
   end
 
   def self.comments_from_json
-    puts "*************************"
-    puts "repo name: #{@issue.repository.name}"
-    puts "repo number: #{@issue.git_issue_number}"
-    puts "*************************"
+    # puts "*************************"
+    # puts "repo name: #{@issue.repository.name}"
+    # puts "repo number: #{@issue.git_issue_number}"
+    # puts "*************************"
     comments = GithubHandler.query_github_issue_data(@issue.repository.name, @issue.git_issue_number, "comments")
 
     #query API for issue comments

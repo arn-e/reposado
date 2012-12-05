@@ -124,9 +124,6 @@ module GithubDataProcessor
     { :relevant_words => result }
   end
 
-  def activity_by_week
-  end
-
   def collect_data(hashes=[])
     data = {}
     hashes.each do |hash|
