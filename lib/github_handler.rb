@@ -18,9 +18,46 @@ module GithubHandler
     query_api(url)
   end
 
-  def self.query_github_issue_data(repo, issue_number, data_type = "comments")
-    url = "https://api.github.com/repos#{repo}/issues/#{issue_number}/#{data_type}"
-    query_api(url)
+  def self.multi_query_github_issue_data(pool, repo_id)
+    list, repo_id = pool, repo_id
+    EventMachine.run do
+      multi = EventMachine::MultiRequest.new
+      list.each do |item|
+        repo, issue_number, repo_id = item[1], item[2], item[3]
+        comment_ident, event_ident = "#{item[0]}_comments", "#{item[0]}_events"
+
+        url_comment = "https://api.github.com/repos#{repo}/issues/#{issue_number}/comments?access_token=#{OAUTH_TOKEN}"   
+        url_event = "https://api.github.com/repos#{repo}/issues/#{issue_number}/events?access_token=#{OAUTH_TOKEN}"   
+        
+        multi.add comment_ident, EventMachine::HttpRequest.new(url_comment).get
+        multi.add event_ident, EventMachine::HttpRequest.new(url_event).get
+      end
+      multi.callback do
+        # puts multi.responses[:callback]
+        Issue.parsed_multi_response(multi.responses[:callback], repo_id)
+        puts multi.responses[:errback]
+        EventMachine.stop
+      end
+    end
+  end
+
+  def self.query_github_issue_data(repo, issue_number, data_type, issue_id)
+    issue_id = issue_id
+    url = "https://api.github.com/repos#{repo}/issues/#{issue_number}/#{data_type}?access_token=#{OAUTH_TOKEN}"  
+    EventMachine.run {
+      http = EventMachine::HttpRequest.new(url).get
+      http.errback { 
+        p 'Error Callback Reached'
+        EM.stop 
+      }
+      http.callback {
+        response = JSON.parse(http.response)
+        data_type == "comments" ? Issue.new_comment(response, issue_id) : Issue.new_event(response, issue_id)
+        EventMachine.stop
+      }
+    }        
+    # query_api(url)
+
   end
 
   def self.query_github_commits(repo, branch_name, branch_start_sha)

@@ -56,24 +56,35 @@ class Repository < ActiveRecord::Base
       Issue.from_json(issue, repo_id)
     end
 
+    pool, repo_id = Issue.query_pool(repo_id)    
+    distributed_async_pool(pool, repo_id)
+
+  end
+
+  def self.distributed_async_pool(pool, repo_id, set = 10)
+    pool.each_slice(set) do |collection|
+      GithubHandler.multi_query_github_issue_data(collection, repo_id)
+    end 
   end
 
   def self.collect_commits(repo_path, repo_id)
+
     branches = collect_branches(repo_path)
     branches.each do |branch|
       branch_name, branch_start_sha = branch["name"], branch["commit"]["sha"]
-      commits_gathered = false
+      commits_gathered, count = false, 0
+      # sha_collection = {}
 
-      until commits_gathered
+      # Repository.find(repo_id).commits.each {|commit| sha_collection[commit.sha] = 1}
+      # until commits_gathered        
         # TODO : Update sha_collection based on internal created_date
-        sha_collection = {}
-        Repository.find(repo_id).commits.each {|commit| sha_collection[commit.sha] = 1}
         commit_data = collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
-        Commit.update_commit_data(commit_data, repo_id, sha_collection) unless commit_data.nil? || commit_data.length < 1
-        branch_start_sha = commit_data[-1]["sha"]
-        (commits_gathered = true) if commit_data.length < 100
-      end
-
+        Commit.update_commit_data(commit_data, repo_id) unless commit_data.nil? || commit_data.length < 1
+        # sha_collection = Commit.update_commit_data(commit_data, repo_id, sha_collection) unless commit_data.nil? || commit_data.length < 1
+        # branch_start_sha = commit_data[-1]["sha"]
+        # count += 1
+        # (commits_gathered = true) if (commit_data.length < 100 || count >= 1 || commit_data.class == Hash)
+      # end      
     end
 
   end
@@ -85,5 +96,7 @@ class Repository < ActiveRecord::Base
   def self.collect_branches(repo_path)
     GithubHandler.query_github_branches(repo_path)
   end
+
+ 
 
 end

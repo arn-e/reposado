@@ -10,9 +10,9 @@ class Commit < ActiveRecord::Base
     most_recent_commit
   end
 
-  def self.update_commit_data(commit_data, repo_id, sha_collection)
+  def self.update_commit_data(commit_data, repo_id)
     commit_data.each do |commit|
-      logger.debug("error : #{commit}")
+      # logger.debug("error : #{commit}")
       @new_commit = Commit.new
       @new_commit.repository_id = repo_id
       @new_commit.sha = commit["sha"]
@@ -31,11 +31,13 @@ class Commit < ActiveRecord::Base
           @new_commit.git_user = " "
         end
         @new_commit.date = DateTime.parse(commit["commit"]["committer"]["date"])
-
-        @new_commit.save if sha_collection[@new_commit.sha].nil?
-
+        # if sha_collection[@new_commit.sha].nil?
+          @new_commit.save 
+          # sha_collection[@new_commit.sha] = 1
+        # end
       end
     end
+    # sha_collection
   end
 
 end
