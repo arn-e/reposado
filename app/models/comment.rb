@@ -5,8 +5,6 @@ class Comment < ActiveRecord::Base
 
   def self.from_json(json)
     comment      = self.new
-    puts "************************"
-    puts "USER LOGIN: #{json["user"]["login"]}"
     comment.git_user = json["user"]["login"]
     comment.body = json["body"]
     comment.date = DateTime.parse(json["created_at"])
