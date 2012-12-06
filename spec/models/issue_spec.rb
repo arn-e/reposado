@@ -10,11 +10,18 @@ describe Issue do
 
   let(:issue) { Issue.new }
   describe '.from_json' do
-    
+
     context 'given valid input' do
       let(:json) { {"title" => "dummy_title", "body" => "dummy_body", "created_at" => "2012-12-02 22:39:44", "updated_at" => "2012-12-02 22:39:44", "git_issue_number" => 2}}
+      let(:repository) { Repository.new }
+      before(:each) do
+        repository.stub(:name).and_return("dummy_repo")
+        issue.stub(:id).and_return(1)
+        issue.stub(:repository).and_return(repository)
+        issue.stub(:github_issue_number).and_return(17)
+      end
 
-      before do
+      before(:each) do
         Issue.stub(:comments_from_json).and_return(nil)
         Issue.stub(:events_from_json).and_return(nil)
       end
@@ -27,27 +34,42 @@ describe Issue do
     end
 
     context 'given valid repo_id' do
+      let(:repository) { Repository.new }
+
+      before(:each) do
+        repository.stub(:name).and_return("dummy_repo")
+        issue.stub(:id).and_return(1)
+        issue.stub(:repository).and_return(repository)
+        issue.stub(:github_issue_number).and_return(17)
+        Issue.stub(:comments_from_json).and_return(nil)
+        Issue.stub(:events_from_json).and_return(nil)
+      end
+
+      let(:json) { {"title" => "dummy_title", "body" => "dummy_body", "created_at" => "2012-12-02 22:39:44", "updated_at" => "2012-12-02 22:39:44", "git_issue_number" => 2}}
+
       it 'sets the repository_id column' do
-        Issue.find(1).repository_id.should eql(1)
+        Issue.from_json(json, 1)
+        Issue.last.repository_id.should eql(1)
       end
     end
 
   end
-  
+
   describe '.comments_from_json' do
-    
+
     context 'issue has no comments' do
       let(:comment_data) { [{"user" => {"login" => "dummy_login"}, "body" => "dummy_body", "created_at" => ""}] }
       let(:comment) { Comment.new }
       let(:comment_data) { [] }
       let(:issue) { Issue.new }
       let(:repository) { Repository.new }
+
       before(:each) do
         repository.stub(:name).and_return("dummy_repo")
         issue.stub(:id).and_return(1)
         issue.stub(:repository).and_return(repository)
         issue.stub(:github_issue_number).and_return(17)
-      end      
+      end
 
       it 'does not save a new comment' do
         GithubHandler.stub(:query_github_issue_data).and_return(comment_data)
@@ -62,38 +84,42 @@ describe Issue do
     context 'issue has comments' do
       let(:issue) { Issue.new }
       let(:repository) { Repository.new }
+      let(:comment_data) { [{"user" => {"login" => "dummy_login"}, "body" => "dummy_body", "created_at" => "2012-12-02 22:39:44"}] }
+
       before(:each) do
         repository.stub(:name).and_return("dummy_repo")
         issue.stub(:id).and_return(1)
         issue.stub(:repository).and_return(repository)
         issue.stub(:github_issue_number).and_return(17)
-      end      
+      end
 
       it 'saves a new comment' do
         GithubHandler.stub(:query_github_issue_data).and_return(comment_data)
         Issue.comments_from_json(issue)
-        comment.count.should eql(1)
+        Comment.count.should eql(1)
       end
 
       it 'saves the correct body to the DB' do
-        comment.find(1).body.should eql("dummy_body")
+        GithubHandler.stub(:query_github_issue_data).and_return(comment_data)
+        Issue.comments_from_json(issue)
+        Comment.last.body.should eql("dummy_body")
       end
     end
 
   end
 
   describe '.events_from_json' do
-    let(:event_data) { {"created_at" => "2012-12-02 22:39:44", "actor" => {"login" => "dummy_login"}, "event" => "dummy_event"} }
+    let(:event_data) { [{"created_at" => "2012-12-02 22:39:44", "actor" => {"login" => "dummy_login"}, "event" => "dummy_event"}] }
     let(:event) { Event.new }
     let(:issue) { Issue.new }
 
     let(:repository) { Repository.new }
-  
+
     before(:each) do
       repository.stub(:name).and_return("dummy_repo")
       issue.stub(:repository).and_return(repository)
       issue.stub(:github_issue_number).and_return(17)
-    end      
+    end
 
     before do
       issue.stub(:id).and_return(1)
@@ -107,7 +133,7 @@ describe Issue do
         issue.stub(:id).and_return(1)
         issue.stub(:repository).and_return(repository)
         issue.stub(:github_issue_number).and_return(17)
-      end      
+      end
 
       it 'writes a new event to the DB' do
         Issue.events_from_json(issue)

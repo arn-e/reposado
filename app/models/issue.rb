@@ -25,9 +25,6 @@ class Issue < ActiveRecord::Base
   def self.comments_from_json(issue)
     comments = GithubHandler.query_github_issue_data(issue.repository.name, issue.git_issue_number, "comments")
     if (comments.class == Array && comments != []) || (comments.class == Hash && comments["message"] != "Not Found")
-        puts "*************************"
-        puts "COMMENTS: #{comments}"
-        puts "*************************"
         comments.each do |comment|
           new_comment          = Comment.from_json(comment)
           new_comment.issue_id = issue.id
