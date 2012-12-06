@@ -8,9 +8,6 @@ module GithubHandler
   # refactor
 
   def self.track_url(url)
-    # f = open('/Users/apprentice/Desktop/urls.txt', 'a')
-    # f.puts url
-    # f.close
   end
 
   def self.query_github(repo, state, page_num = 1)
@@ -33,7 +30,6 @@ module GithubHandler
         multi.add event_ident, EventMachine::HttpRequest.new(url_event).get
       end
       multi.callback do
-        # puts multi.responses[:callback]
         Issue.parsed_multi_response(multi.responses[:callback], repo_id)
         puts multi.responses[:errback]
         EventMachine.stop
@@ -56,12 +52,9 @@ module GithubHandler
         EventMachine.stop
       }
     }        
-    # query_api(url)
-
   end
 
   def self.query_github_commits(repo, branch_name, branch_start_sha)
-    # url = 'https://api.github.com/repos/twitter/bootstrap/commits?per_page=100&sha=d335adf644b213a5ebc9cee3f37f781ad55194ef'
     url = "https://api.github.com/repos#{repo}/commits?per_page=100&sha=#{branch_start_sha}"
     request, http = self.set_connection_parameters(url, 443)
     response = http.request(request)
