@@ -11,6 +11,8 @@ class Repository < ActiveRecord::Base
   has_many :issues
   has_many :commits
   validates_presence_of :name, :url
+  validate :valid_github_url
+
 
   def self.from_url(url)
     repo_path   = URI.parse(url).path
@@ -28,6 +30,21 @@ class Repository < ActiveRecord::Base
     collect_commits(repo_path, repo_id)
     @repo.child_objects_loaded = true
     @repo
+  end
+
+  def valid_github_url
+    is_valid = false
+    if (url =~ /https:\/\/github.com\/\w+\/\w+$/)
+      uri = URI.parse(url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      response = http.get(uri.request_uri)
+      is_valid = true if response.is_a? Net::HTTPSuccess
+    end
+    if not is_valid
+      errors.add(:url, "must be a valid github repository URL")
+    end
+    is_valid
   end
 
   private
