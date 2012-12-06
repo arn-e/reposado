@@ -1,11 +1,13 @@
 var draw_histo = function(json_data){
 
+  $('#histo').text('');
+
   var bartimes = json_data.response_times;
 
   var nbins = 17;
   var binned = [];
   for(var i=0;i<nbins;i++){binned.push(0);}
-  var maxtime = 30600;
+  var maxtime = 14400;
   var binwidth = maxtime / nbins;
   var binnames = [];
   for(var i=0;i<nbins;i++){binnames.push(Math.round(i*binwidth/360)/10 + "-" +
@@ -23,7 +25,7 @@ var draw_histo = function(json_data){
     .append("g")
       .attr("class", "barchart");
 
-  var barcolor = d3.interpolateHsl("#4f4", "#f44");
+  var barcolor = d3.interpolateHsl("#00f", "#f00");
 
 
   var b = barsvg.selectAll(".bar")

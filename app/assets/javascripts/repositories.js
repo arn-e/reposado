@@ -24,6 +24,7 @@ function showRepoInfo(repo) {
   // loop over repo.chart_data.relevant_words
   var idx;
   var word;
+  $('#word_frequency').text('');
   for (idx=0; idx < chart_data.relevant_words.length; idx++) {
     word = chart_data.relevant_words[idx].word;
     $('#word_frequency').append(word + ', ');
