@@ -1,0 +1,12 @@
+<div class="span3 repo-link" id="repo-link-<%= repo.id %>">
+  <h1>
+    <%= repo.name %>
+    <%= image_tag 'ajax-loader.gif', :id => "loader-#{repo.id}", :class => "loader" %>
+  </h1>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  updateRepoStatus(<%= repo.id %>);
+});
+</script>

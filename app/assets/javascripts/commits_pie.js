@@ -1,7 +1,7 @@
 var draw_pie = function(json_data){
   console.log(json_data);
-  var width = 960,
-      height = 600,
+  var width = 280,
+      height = 175,
       radius = Math.min(width, height) / 2;
 
   /*from ColorBrewer*/
@@ -44,12 +44,12 @@ var draw_pie = function(json_data){
 
   var show_user = function( d ){
         detail_popup.append("tspan")
-            .attr("font-size", "160%")
+            .attr("font-size", "120%")
             .attr("x", d.ind != 8 ? 0 : -15)
             .text(d.name);
 
         detail_popup.append("tspan")
-            .attr("font-size", "80%")
+            .attr("font-size", "60%")
             .attr("x", 0).attr("y", 30)
             .text("has " + Math.round(100 * d.num / total_commits) +
                   "% of the total commits.");
@@ -102,6 +102,7 @@ var draw_pie = function(json_data){
       .selectAll("g.legend_entry_group")
       .data(eight_and_others)
       .enter().append("g")
+      .attr("font-size", "70%")
       .attr("class",     function(d) {return "legend_entry_group " + "legno" + d.ind;})
       .attr("transform", function(d) {return "translate(0," + 30 * d.ind + ")";})
       .on("mouseover",   function(d) {show_user(d);
@@ -110,18 +111,18 @@ var draw_pie = function(json_data){
                                       unlight_sel(d.ind); } );
 
   legend_group.append("text")
-      .attr("x", 40)
+      .attr("x", 60)
       .style("text-anchor", "end")
       .text(function(d){return d.num;});
 
   legend_group.append("circle")
-      .attr("cx", 60)
-      .attr("cy", -9)
-      .attr("r", 10)
+      .attr("cx", 20)
+      .attr("cy", -3)
+      .attr("r", 5)
       .style("fill", function(d) {return color(d.ind);} );
 
   legend_group.append("text")
       .text(function(d){return d.name;})
-      .attr("x", function(d){return d.ind != 8 ? 80 : 74;});
+      .attr("x", function(d){return d.ind != 8 ? 70 : 64;});
 
 };
