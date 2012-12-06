@@ -8,8 +8,8 @@
 
 <div class="container">
 	<div class="row-fluid">
-		<div class="span1"></div>
-		<div class="span5" id="header">
+		<!-- <div class="span1"></div> -->
+		<div class="span6" id="header">
 			<%= image_tag "039_agave_bloom.png", { :height => 150 } %>
 			<h1><a href="http://localhost:3000">reposado</a></h1>
 			<p>visualizing engagement<br> in open source GitHub repos</p>
@@ -17,29 +17,38 @@
 		<div class="span1"></div>
 		<div class="span5" id="search">
 			 <%= form_tag('repositories/create', :method => "post",
-                :remote => true,
-                :class => 'the_button') do %>
+                :remote => true) do %>
 				    			<%= text_field_tag "repo" %>
-				    			<%= submit_tag "Search repos" %>
+				    			<%= submit_tag "search repos", :class => 'button' %>
     		<% end %>
 		</div>
 	</div>
 </div>
 
-<div id="pie"></div>
+<div id="results">
+  <div class="container">
+  	<div class="row-fluid">
+      <div id="chart-repo-name" class="span12"><h1></h1></div>
+    </div>
+    <div id="chart-headers" class="row-fluid">
+      <div class="span4"><h1>users by commits</h1></div>
+      <div class="span4"><h1>response times</h1></div>
+      <div class="span4"><h1>word frequency</h1></div>
+    </div>
+    <div class="row-fluid">
+      <div class="span4">
+        <div id="pie">
+          <!-- <img src="http://andreasrecipes.com/photos/Key_lime_pie.jpg" /> -->
+        </div>
+  		</div>
+      <div class="span4"></div>
+      <div class="span4"></div>
+  	</div>
+  </div>
+</div>
+
 
 <!-- <div class="container">
-	<div class="row-fluid">
-		<div class="span12">
-			<div class="pie">
-				 <img src="http://andreasrecipes.com/photos/Key_lime_pie.jpg" />
-			</div>
-		</div>
-	</div>
-</div>
- -->
-
-<div class="container">
 	<div id="nav">
 		<div class="row-fluid">
 			<div class="span7"></div>
@@ -51,21 +60,17 @@
 					<li><a href="#all-repos">all</a></li>
 				</div>
 				<!-- <div class="span1"></div> -->
-			</ul>
+<!-- 			</ul>
 		</div>
 	</div>
-</div>
+</div> -->
 
-<div id="recent-repos">
-	<%= render :partial => 'recent_repos', :repos => @repos %>
-</div>
-
-<div id="all-repos">
-	<div class="container">
-		<div class="row-fluid">
-			<h1>hiiiiiiii</h1>
-		</div>
-	</div>
+<div id="repo-gallery">
+  <div class="container">
+    <div class="row-fluid">
+    	<%= render :partial => 'repo', :collection => @repo_names %>
+    </div>
+  </div>
 </div>
 
 <div class="container">
