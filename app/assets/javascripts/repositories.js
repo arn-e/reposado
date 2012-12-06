@@ -12,8 +12,8 @@ function updateRepoStatus(repo_id) {
 }
 
 function showRepoInfo(repo) {
-  //draw_pie(repo.chart_data);
   $('#chart-repo-name').css('display', 'block');
   $('#chart-repo-name').html('<h1>' + repo.name + '</h1>');
   $('#chart-headers').css('display', 'block');
+  draw_pie(repo.chart_data);
 }
