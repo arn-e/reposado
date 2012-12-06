@@ -1,8 +1,8 @@
 var draw_pie = function(json_data){
   console.log(json_data);
-  var width = 960,
-      height = 600,
-      radius = Math.min(width, height) / 2;
+  var width = $('#pie').width(),
+      height = 0.5 * width,
+      radius = 0.5 * height;
 
   /*from ColorBrewer*/
   var YlOrRd = ["rgb(255,255,204)", "rgb(255,237,160)",
@@ -15,7 +15,7 @@ var draw_pie = function(json_data){
       .range(YlOrRd.reverse());
 
   var arc = d3.svg.arc()
-      .outerRadius(radius - 10)
+      .outerRadius(radius)
       .innerRadius(0);
 
   var pie = d3.layout.pie()
@@ -37,20 +37,21 @@ var draw_pie = function(json_data){
 
   var detail_popup = pie_svg.append("g")
         .attr("class", "detail_popup")
-        .attr("transform", "translate(" + (2*radius) + ",60)")
+        .attr("transform", "translate(" + (2*radius) + "," + height/2 + ")")
         .append("text");
 
   var total_commits = 0;
 
   var show_user = function( d ){
         detail_popup.append("tspan")
-            .attr("font-size", "160%")
-            .attr("x", d.ind != 8 ? 0 : -15)
+            .attr("class", "popup_user")
+            .attr("x", "1em")
+            .attr("y", "-5em")
             .text(d.name);
 
         detail_popup.append("tspan")
-            .attr("font-size", "80%")
-            .attr("x", 0).attr("y", 30)
+            .attr("class", "popup_text")
+            .attr("x", "1em").attr("y", "-3em")
             .text("has " + Math.round(100 * d.num / total_commits) +
                   "% of the total commits.");
   };
@@ -98,30 +99,32 @@ var draw_pie = function(json_data){
       .on("mouseout",  function(d) {unshow_user();
                                     unlight_sel(d.data.ind); } );
 
+  var legend_em_px = $('g.legend_group').css('font-size').split('px')[0];
+
   var legend_group = pie_svg.select("g.legend_group")
       .selectAll("g.legend_entry_group")
       .data(eight_and_others)
       .enter().append("g")
       .attr("class",     function(d) {return "legend_entry_group " + "legno" + d.ind;})
-      .attr("transform", function(d) {return "translate(0," + 30 * d.ind + ")";})
+      .attr("transform", function(d) {return "translate(0," + legend_em_px * d.ind + ")";})
       .on("mouseover",   function(d) {show_user(d);
                                       light_sel(d.ind); })
       .on("mouseout",    function(d) {unshow_user();
                                       unlight_sel(d.ind); } );
 
   legend_group.append("text")
-      .attr("x", 40)
+      .attr("x", 3 * legend_em_px)
       .style("text-anchor", "end")
       .text(function(d){return d.num;});
 
   legend_group.append("circle")
-      .attr("cx", 60)
-      .attr("cy", -9)
-      .attr("r", 10)
+      .attr("cx", 4 * legend_em_px)
+      .attr("cy", -legend_em_px/2.5)
+      .attr("r", legend_em_px/2)
       .style("fill", function(d) {return color(d.ind);} );
 
   legend_group.append("text")
       .text(function(d){return d.name;})
-      .attr("x", function(d){return d.ind != 8 ? 80 : 74;});
+      .attr("x", "5em");
 
 };
