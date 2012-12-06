@@ -65,16 +65,23 @@ module GithubDataProcessor
         comment_date < event_date ? (response_times[issue.id] = (comment_date - issue_created)) : (response_times[issue.id] = (event_date - issue_created))
       end
     end
-    response_times
+
+    result = []
+    response_times.each do |response_time|
+      result << response_time[1]
+    end
+    { :response_times => result }
+
   end
 
   def resolution_time_for_issues
   end
 
   def average_response_time(sum = 0)
-    response_times = response_time_for_issues
-    response_times.each {|key, value| sum += value}
-    sum / response_times.size
+    res = response_time_for_issues
+    res[:response_times].each {|time| sum += time}
+    avg = sum / res[:response_times].length
+    { :average_response_time => avg }
   end
 
   def relevant_words
@@ -121,7 +128,7 @@ module GithubDataProcessor
       result << single_hash
     end
 
-    { :relevant_words => result }
+    { :relevant_words => result.reverse[0...17] }
   end
 
   def collect_data(hashes=[])
