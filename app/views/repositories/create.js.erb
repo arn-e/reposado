@@ -1,4 +1,11 @@
 // check to see if the repository has completed being cached
 // if it has, render it using Joe's fancy-schmancy D3 stuff
 // otherwise, sleep and try again in 5 seconds
+<% if @valid %>
 $('#repo-gallery').find('div').eq(0).find('div').eq(0).prepend("<%= escape_javascript(render(:partial => 'repo', :object => @repo)) %>");
+<% else %>
+<% @error_messages.each do |message| %>
+$('#errors').html('');
+$('#errors').append('<%= message %>');
+<% end %>
+<% end %>
