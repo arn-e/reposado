@@ -1,13 +1,15 @@
 .arc path {stroke-width: 0;}
 .legend text {fill: #402020;}
 #pie {position: relative;
-      width: 84%;
-      font-size: 60%;
+      right: 10%;
+      margin-top: -10%;
+      width: 130%;
+      font-size: 72%;
     }
 
 #pie img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  padding: 5%;
+  padding: 2%;
 }

@@ -10,7 +10,8 @@ var draw_pie = function(json_data){
 
     var width = $('#pie').width(),
         height = width,
-        radius = 0.25 * height;
+        // radius = 0.25 * height;
+        radius = 0.30 * height;
 
     /*from ColorBrewer*/
     var YlOrRd = ["rgb(255,255,204)", "rgb(255,237,160)",
