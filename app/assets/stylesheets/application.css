@@ -19,32 +19,6 @@ body {
   font-weight: normal;
 }
 
-ul {
-  margin-bottom: 0px;
-  font-family: "Open Sans", sans-serif;
-  text-align: center;
-}
-
-li {
-  font-size: 100%;
-  list-style: none;
-}
-
-ul a {
-  color: #503030;
-  text-decoration: none;
-}
-
-ul #tab-1, #tab-2 {
-  height: 100%;
-  background-color: #e0e0e0;
-  border-radius: 8px 8px 0px 0px;
-  -moz-border-radius: 8px 8px 0px 0px;
-  -webkit-border-radius: 8px 8px 0px 0px;
-  padding-top: .8%;
-  margin: 5px 5px 0px 0px;
-}
-
 #header {
   margin: 0.6em 0 0 0.3em;
 }
@@ -92,6 +66,8 @@ ul #tab-1, #tab-2 {
 
 #chart-repo-name {
   display: none;
+  background-color: #e0e0e0;
+  padding-right: 20%;
 }
 
 #chart-repo-name h1 {

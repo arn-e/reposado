@@ -60,8 +60,8 @@ var draw_pie = function(json_data){
             detail_popup.append("tspan")
                 .attr("class", "popup_text")
                 .attr("x", "1em").attr("y", "-3em")
-                .text("has " + Math.round(100 * d.num / total_commits) +
-                    "% of the total commits.");
+                .text(Math.round(100 * d.num / total_commits) +
+                    "% of total commits.");
     };
 
     var unshow_user = function(){
