@@ -17,15 +17,15 @@ function showRepoInfo(repo) {
   $('#chart-headers').css('display', 'block');
   var chart_data = $.parseJSON(repo.chart_data);
   draw_pie(chart_data);
+  draw_histo(chart_data);
+
 
   // add the words
   // loop over repo.chart_data.relevant_words
   var idx;
   var word;
-  var score;
   for (idx=0; idx < chart_data.relevant_words.length; idx++) {
     word = chart_data.relevant_words[idx].word;
-    score = chart_data.relevant_words[idx].score;
-    $('#word_frequency').append(word + '(' + score + ') <br/>\n');
+    $('#word_frequency').append(word + ', ');
   }
 }
