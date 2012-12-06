@@ -12,6 +12,20 @@
  *= require_tree .
  */
 
+ @font-face {
+  font-family: 'Carter One';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Carter One'), local('CarterOne'), url(http://themes.googleusercontent.com/static/fonts/carterone/v5/VjW2qt1pkqVtO22ObxgEBb3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(http://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
+}
+
 body {
   background-color: #fafafa;
   color: #503030;

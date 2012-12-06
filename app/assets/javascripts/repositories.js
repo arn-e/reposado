@@ -15,5 +15,17 @@ function showRepoInfo(repo) {
   $('#chart-repo-name').css('display', 'block');
   $('#chart-repo-name').html('<h1>' + repo.name + '</h1>');
   $('#chart-headers').css('display', 'block');
-  draw_pie($.parseJSON(repo.chart_data));
+  var chart_data = $.parseJSON(repo.chart_data);
+  draw_pie(chart_data);
+  draw_histo(chart_data);
+
+
+  // add the words
+  // loop over repo.chart_data.relevant_words
+  var idx;
+  var word;
+  for (idx=0; idx < chart_data.relevant_words.length; idx++) {
+    word = chart_data.relevant_words[idx].word;
+    $('#word_frequency').append(word + ', ');
+  }
 }
