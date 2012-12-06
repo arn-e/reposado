@@ -2,14 +2,12 @@ class RepositoriesController < ApplicationController
   respond_to :json, :html
 
   def index
-    @repo_names = Repository.order("created_at DESC").limit(2).map { |repo| repo.name || "" }
+    @repo_names = Repository.order("created_at DESC").map { |repo| repo.name || "" }
   end
 
   def show
     repo_name = "/#{params[:github_owner]}/#{params[:github_project]}"
-    puts "repo_name = #{repo_name}"
     @repo = Repository.find_by_name(repo_name)
-    puts "@repo = #{@repo}"
     respond_with @repo
   end
 

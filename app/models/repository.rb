@@ -67,7 +67,7 @@ class Repository < ActiveRecord::Base
     branches.each do |branch|
       branch_name, branch_start_sha = branch["name"], branch["commit"]["sha"]
       commit_data = collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
-      update_commit_data(commit_data, repo_id) unless commit_data.nil? || commit_data.length < 1
+      commits_from_json(commit_data, repo_id) unless commit_data.nil? || commit_data.length < 1
     end
 
   end
@@ -80,7 +80,9 @@ class Repository < ActiveRecord::Base
     GithubHandler.query_github_branches(repo_path)
   end
 
-  def self.update_commit_data(commit_data, repo_id)
+  def self.commits_from_json(commit_data, repo_id)
+
+    # commit_data each { |commit| Commit.from_json(commit)}
     commit_data.each do |commit|
       logger.debug("error : #{commit}")
       @new_commit = Commit.new
