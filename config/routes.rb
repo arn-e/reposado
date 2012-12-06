@@ -2,7 +2,7 @@ Reposado::Application.routes.draw do
   root :to => "repositories#index"
 
   post "repositories/create" => 'repositories#create'
-  get "repositories/:github_owner/:github_project" => 'repositories#show'
+  get "repositories/:id" => 'repositories#show'
 
   match '/:repo' => 'repositories#view'
 
