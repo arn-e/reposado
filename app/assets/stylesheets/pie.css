@@ -2,6 +2,7 @@
 .legend text {fill: #402020;}
 #pie {position: relative;
       width: 84%;
+      font-size: 60%;
     }
 
 #pie img {

@@ -9,8 +9,8 @@ var draw_pie = function(json_data){
   } else {
 
     var width = $('#pie').width(),
-        height = 0.5 * width,
-        radius = 0.5 * height;
+        height = width,
+        radius = 0.25 * height;
 
     /*from ColorBrewer*/
     var YlOrRd = ["rgb(255,255,204)", "rgb(255,237,160)",

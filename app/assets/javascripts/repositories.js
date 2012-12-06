@@ -15,5 +15,5 @@ function showRepoInfo(repo) {
   $('#chart-repo-name').css('display', 'block');
   $('#chart-repo-name').html('<h1>' + repo.name + '</h1>');
   $('#chart-headers').css('display', 'block');
-  draw_pie(repo.chart_data);
+  draw_pie($.parseJSON(repo.chart_data));
 }
