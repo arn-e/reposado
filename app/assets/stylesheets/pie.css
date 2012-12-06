@@ -2,4 +2,12 @@
 .legend text {fill: #402020;}
 #pie {position: relative;
       width: 84%;
-      margin: -15% 0 0 20%;}
+      font-size: 60%;
+    }
+
+#pie img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5%;
+}

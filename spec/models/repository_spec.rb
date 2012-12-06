@@ -63,15 +63,23 @@ describe Repository do
     end
   end
 
+  context "gathering child data" do
+    before(:all) do
+      VCR.use_cassette('repositories') do
+        Repository.from_url("https://github.com/reposado/reposado")
+      end
+      @repo = Repository.find_by_name('/reposado/reposado')
+    end
+
+    describe ".commits_from_json" do
+      it "creates and saves a Commit for each element of the collection passed in" do
+        pending
+      end
+    end
+  end
+
   context "data processing" do
-    # 5.times do
-    #   FactoryGirl.create(:fully_loaded_issue)
-    # end
-
-    # FactoryGirl.create(:repository_with_commits)
-
     let (:repo_with_commits) { FactoryGirl.create(:repository_with_commits) }
-    # let (:repo_with_commits) { Repository.last}
 
     describe "#users_by_commits" do
       it "has number of user commits" do

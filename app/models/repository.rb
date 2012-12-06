@@ -15,14 +15,18 @@ class Repository < ActiveRecord::Base
   def self.from_url(url)
     repo_path   = URI.parse(url).path
     @repo = Repository.find_by_url(url)
-    return @repo if @repo
-    @repo       = Repository.new
-    @repo.url   = url
-    @repo.name  = repo_path
-    @repo.save!
+    if @repo
+      return @repo if @repo.child_objects_loaded
+    else
+      @repo       = Repository.new
+      @repo.url   = url
+      @repo.name  = repo_path
+      @repo.save!
+    end
     repo_id     = @repo.id
     issues_from_github(repo_path, repo_id)
     collect_commits(repo_path, repo_id)
+    @repo.child_objects_loaded = true
     @repo
   end
 

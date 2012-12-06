@@ -86,74 +86,72 @@ ul #tab-1, #tab-2 {
   font-weight: normal;
 }
 
-#tabs h1 {
-  font-family: "Carter One", sans-serif;
-  font-size: 150%;
-  font-weight: normal;
-  text-align: right;
-}
-
-#recent-repos {
-}
-
-#all-repos {
-  display: none;
-  background-color: #e0e0e0;
-}
-
-#repos {
-  background-color: #e0e0e0;
-}
-
-#repos h1 {
-  font-family: 'Carter One', sans-serif;
-  font-size: 225%;
-  font-weight: normal;
-  line-height: 100%;
-  text-align: right;
-}
-
-#repos h2 {
-  color: #503030;
-  font-family: 'Carter One', sans-serif;
-  font-size: 2em;
-  font-weight: normal;
-  line-height: 125%;
-  text-align: center;
-}
-
-#repos a {
-  color: #503030;
-  text-decoration: none;
-}
-
-#repos a:hover {
-  background-color: white;
-}
-
-#repos p {
-  font-family: "Open Sans", sans-serif;
-  padding: 0 2% 0 10%;
-}
-
-#library-link {
+#results {
   background-color: #fafafa;
 }
 
-#library-link h1 {
-  font-family: "Carter One", sans-serif;
-  font-size: 110%;
-  line-height: 125%;
-  font-weight: normal;
-  color: #503030;
-  text-align: left;
+#chart-repo-name {
+  display: none;
 }
 
-#library-link a {
-  font-family: "Carter One", sans-serif;
+#chart-repo-name h1 {
+  font-family: 'Carter One', sans-serif;
   font-size: 200%;
+  text-align: right;
+}
+
+#chart-repo-name a {
+  text-decoration: none;
+  color: #503030;
+}
+
+#chart-headers {
+  display: none;
+}
+
+#chart-headers h1 {
+  font-family: 'Carter One', sans-serif;
+  font-size: 130%;
+  text-align: center;
+  padding: 2%;
+}
+
+#repo-gallery {
+  background-color: #e0e0e0;
+  padding: 2% 0 2% 0px;
+}
+
+#repo-gallery h1 {
+  font-family: 'Carter One', sans-serif;
+  font-size: 100%;
+  font-weight: normal;
+  line-height: 100%;
+  text-align: center;
+}
+
+#repo-gallery a {
   color: #503030;
   text-decoration: none;
+}
+
+#repo-gallery a:hover {
+  background-color: white;
+}
+
+.repo-link {
+  background-color: #a89383;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  margin: 1%;
+  height: 50px;
+}
+
+.loader {
+  margin-top: 5px;
+  width: 100px;
+  height: 6px;
+  display: none;
 }
 
 #footer {
@@ -169,55 +167,6 @@ ul #tab-1, #tab-2 {
 
 #footer a:hover {
   border-bottom: 1px dotted #503030;
-}
-
-#repo-1 {
-  background-color: #7279d8;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  height: 85%;
-  margin: 2% 0 2% 0;
-}
-
-#repo-2 {
-  background-color: #a6cfe8;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  margin: 2% 0 2% 0;
-}
-
-#repo-3 {
-  background-color: #b593eb;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  margin: 2% 0 2% 0;
-}
-
-#repo-4 {
-  background-color: #AEB3ec;
-  border-radius: 6px; 
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  margin: 2% 0 2% 0;
-}
-
-#repo-5 {
-  background-color: #4c57d8;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  margin: 2% 0 2% 0;
-}
-
-#repo-6 {
-  background-color: #c4aaeb;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  margin: 2% 0 2% 0;
 }
 
 .container {
@@ -305,3 +254,32 @@ ul #tab-1, #tab-2 {
     width: 5.982905982905983%;
     *width: 5.929714493544281%;
   }
+
+.button {
+   background: #a89383;
+   border: none;
+   padding: 4px 8px;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   border-radius: 4px;
+   color: #503030;
+   font-size: 13px;
+   font-family: "Carter One", Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+.button:hover {
+   background: #c8c8c8;
+   }
+.button:active {
+   background: #c8c8c8;
+   }
+
+#repo {
+  -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   border-radius: 4px;
+  height: 20px;
+  width: 150px;
+}
+
