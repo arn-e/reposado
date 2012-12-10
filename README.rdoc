@@ -1,50 +1,37 @@
 == REPOSADO
 
-a snapshot of community engagement for open source repos
+A snapshot of community engagement for open source repos
+Provides visualizations of the following key metrics :
+
+- Commits over users
+- Response time distribution
+- Relevant words (TF-IDF semantic analysis)
 
 == TO DO
-11/30/12
-
-PLANNING
-
-- design library UI
-- plan additional features
 
 CODE
 
-Back end
+Back End
 - move OAUTH token to config
 - run and refactor model unit tests
 - write tests/code for sending processed data to results view
 - write scheduled job to update db records daily
 - add check for existing repo * done (backend hack)
 
-Front end
-- code library UI
-- write integration tests for viewing results
-- code for results view and partials (HTML/CSS/ERB/JS)
-- code for data visualizations (D3)
-- add cache or cookie for rendered images
+Front End
+- Complete Integration Tests
+- Add Visualizations for additional available dimensions :
+  * Resolution time over issues
+  * Comments over users
 
-PROCESS
-
-- get code reviewed by staff
-- push to production
-
-FEATURES
+PLANNED FEATURES
 
 (notes by Arne)
 
-11/30/2012 :
-
-- Time Metrics (comments & issues)
-  * Resolution times
-  * Response times
-
 - Semantic Analysis
-  * Word Frequency (1-grams)
-  * Aggregate Sentiment
+  * Bayes Classification
 
 - Data Collection
-  * Gather all commits instead of a subsset
-  * Gather user profiles & relations (maybe)
+  * Gather all commits instead of a subset
+    * Challenge : Heroku DB row limitation
+  * Gather user profiles & relations
