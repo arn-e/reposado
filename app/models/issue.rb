@@ -47,7 +47,6 @@ class Issue < ActiveRecord::Base
   end
 
   def self.new_comment(response, issue_id)
-    # response = JSON.parse(response)
     if (response.class == Array && response != []) || (response.class == Hash && response["message"] != "Not Found")
         response.each do |comment|
           new_comment          = Comment.from_json(comment)

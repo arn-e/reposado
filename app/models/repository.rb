@@ -53,18 +53,6 @@ class Repository < ActiveRecord::Base
     open_data         = GithubHandler.query_github(repo_path, "open")
     closed_data       = GithubHandler.query_github(repo_path, "closed")
 
-    # threads = []
-
-    # open_data.each do |issue|
-    #   threads << Thread.new { Issue.from_json(issue, repo_id) }
-    # end
-
-    # closed_data.each do |issue|
-    #   threads << Thread.new { Issue.from_json(issue, repo_id) }
-    # end
-
-    # threads.each {|thread| thread.join} #waits for stuff to finish, bubbles exceptions
-
     open_data.each do |issue|
       Issue.from_json(issue, repo_id)
     end
@@ -91,22 +79,16 @@ class Repository < ActiveRecord::Base
 
     branches.each do |branch|
       branch_name, branch_start_sha = branch["name"], branch["commit"]["sha"]
-      # until commits_gathered        
-      # TODO : Update sha_collection based on internal created_date
       commit_data = collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
       Commit.update_commit_data(commit_data, repo_id, sha_collection) unless commit_data.nil? || commit_data.length < 1
-      # Commit.update_commit_data(commit_data, repo_id, sha_collection) unless commit_data.nil? || commit_data.length < 1
-      # branch_start_sha = commit_data[-1]["sha"]
-      # (commits_gathered = true) if (commit_data.length < 100 || count >= 1 || commit_data.class == Hash)
-      # end      
     end
+
   end
 
   def self.list_sha(repo_id,sha_collection = {})
     Repository.find(repo_id).commits.each {|commit| sha_collection[commit.sha] = 1}
     sha_collection
   end
-
 
   def self.collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
     GithubHandler.query_github_commits(repo_path, branch_name, branch_start_sha)
@@ -115,7 +97,5 @@ class Repository < ActiveRecord::Base
   def self.collect_branches(repo_path)
     GithubHandler.query_github_branches(repo_path)
   end
-
-
 
 end
