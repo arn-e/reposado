@@ -27,6 +27,6 @@ function showRepoInfo(repo) {
   $('#word_frequency').text('');
   for (idx=0; idx < chart_data.relevant_words.length; idx++) {
     word = chart_data.relevant_words[idx].word;
-    $('#word_frequency').append(word + ', ');
+    $('#word_frequency').append("<li> " + word + "</li>");
   }
 }
