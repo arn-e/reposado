@@ -274,3 +274,7 @@ body {
   width: 150px;
 }
 
+#word_frequency {
+  position:relative;
+  left: 20%;
+}
