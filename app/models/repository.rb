@@ -53,12 +53,9 @@ class Repository < ActiveRecord::Base
     open_data         = GithubHandler.query_github(repo_path, "open")
     closed_data       = GithubHandler.query_github(repo_path, "closed")
 
-    return if open_data["message"] == "Issues are disabled for this repo"
+    return if (open_data.class == Hash) && (open_data["message"] == "Issues are disabled for this repo")
 
     open_data.each do |issue|
-      puts
-      p issue
-      puts
       Issue.from_json(issue, repo_id)
     end
 

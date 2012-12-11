@@ -4,6 +4,7 @@
 <% if @valid %>
 $('#repo-gallery').find('div').eq(0).find('div').eq(0).prepend("<%= escape_javascript(render(:partial => 'repo', :object => @repo)) %>");
 <% else %>
+<% return if @error_messages == nil %>
 <% @error_messages.each do |message| %>
 $('#errors').html('');
 $('#errors').append('<%= message %>');
