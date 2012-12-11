@@ -1,4 +1,5 @@
 module GithubDataProcessor
+
   def users_by_commits(result = [])
     user_commit_counts.each do |key,value|
       formatted_count = Hash.new
@@ -34,50 +35,13 @@ module GithubDataProcessor
     end
     { :average_response_time => (sum / res[:response_times].length) }
   end
+  
+  def relevant_words(document = [], combined = Hash.new(0))
+    issues.each {|issue| document << words_in_issue(issue)}
+    commits.each {|commit| document << sanitized(commit.message.downcase.split(' '))}
 
-  def relevant_words
-    # tfidf score based on issue (as document) vs corpus
-    # to do : include commit messages
-    document = []
-    issues.each do |issue|
-      words_body = issue.body.split(' ')
-      words_title = issue.title.downcase.split(' ')
-      words_all_comments = []
-      issue.comments.each do |issue_comments|
-        words_comments = issue_comments.body.downcase.split(' ')
-        words_all_comments += words_comments
-      end
-      words_issue = []
-      words_issue += words_body
-      words_issue += words_title
-      words_issue += words_all_comments
-      document << sanitized(words_issue)
-    end
-    commits.each do |commit|
-      words_commit_message = commit.message.downcase.split(' ')
-      document << sanitized(words_commit_message)
-    end
-
-    combined = Hash.new(0)
-    
-    document.each_slice(50) do |slice|
-      TfIdf.new(slice).tf_idf.each do |i|
-        i.each do |key, value|
-          (combined[key] = value) if (value > combined[key])
-        end
-      end
-    end
-
-    combined = combined.sort_by {|key, value| value}
-    result = []
-    combined.each do |word_score|
-      single_score = (['word','score']).zip(word_score).flatten
-      single_hash = Hash.new
-      single_hash[single_score[0]] = single_score[1]
-      single_hash[single_score[2]] = single_score[3]
-      result << single_hash
-    end
-    { :relevant_words => result.reverse[0...17] }
+    combined = highest_scores.sort_by {|key, value| value}
+    { :relevant_words => word_results_formatted.reverse[0...17] }
   end
 
   def collect_data(hashes=[])
@@ -89,6 +53,42 @@ module GithubDataProcessor
   end
 
   private
+
+  def words_in_issue(issue, words_all_comments = [], words_issue = [])
+    words_body, words_title = issue.body.split(' '), issue.title.downcase.split(' ')
+    issue.comments.each {|issue_comments| words_all_comments += issue_comments.body.downcase.split(' ')}
+    sanitized(append_words(words_issue, words_body, words_title, words_all_comments))
+  end
+
+  def append_words(words, body, title, comments)
+    words += body
+    words += title
+    words += comments
+    words
+  end
+
+  def highest_scores(document)
+    document.each_slice(50) do |slice|
+      TfIdf.new(slice).tf_idf.each do |i|
+        i.each do |key, value|
+          (combined[key] = value) if (value > combined[key])
+        end
+      end
+    end
+    combined
+  end
+
+  def word_results_formatted(combined, result = [])
+    combined.each do |word_score|
+      single_score = (['word','score']).zip(word_score).flatten
+      single_hash = Hash.new
+      single_hash[single_score[0]] = single_score[1]
+      single_hash[single_score[2]] = single_score[3]
+      result << single_hash
+    end
+    result
+  end
+
 
   def response_time(issue, event_date, comment_date)
     return nil (if event_date == nil && comment_date == nil)
@@ -143,7 +143,7 @@ module GithubDataProcessor
     string
   end
 
-  def bayes_classifier(string)
+  def bayes_classifier(string) #currently not used; there appears to be a bug in the library
     classifier = Classifier::Bayes.new 'Interesting'
     classifier.train_interesting "bug todo urgent critical broken"
     classifier.classify(string)
