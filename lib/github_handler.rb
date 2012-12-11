@@ -5,11 +5,6 @@ module GithubHandler
 
   OAUTH_TOKEN = "052fa222631a8872903551d0675953361d7810c7"
 
-  # refactor
-
-  def self.track_url(url)
-  end
-
   def self.query_github(repo, state, page_num = 1)
     url = "https://api.github.com/repos#{repo}/issues?state=#{state}&page=#{page_num}&per_page=100"
     query_api(url)

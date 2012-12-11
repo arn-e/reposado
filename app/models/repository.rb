@@ -91,14 +91,8 @@ class Repository < ActiveRecord::Base
 
     branches.each do |branch|
       branch_name, branch_start_sha = branch["name"], branch["commit"]["sha"]
-      # until commits_gathered        
-      # TODO : Update sha_collection based on internal created_date
       commit_data = collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
       Commit.update_commit_data(commit_data, repo_id, sha_collection) unless commit_data.nil? || commit_data.length < 1
-      # Commit.update_commit_data(commit_data, repo_id, sha_collection) unless commit_data.nil? || commit_data.length < 1
-      # branch_start_sha = commit_data[-1]["sha"]
-      # (commits_gathered = true) if (commit_data.length < 100 || count >= 1 || commit_data.class == Hash)
-      # end      
     end
   end
 
