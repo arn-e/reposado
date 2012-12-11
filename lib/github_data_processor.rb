@@ -89,7 +89,6 @@ module GithubDataProcessor
     result
   end
 
-
   def response_time(issue, event_date, comment_date)
     return nil (if event_date == nil && comment_date == nil)
     if comment_date == nil && event_date != nil

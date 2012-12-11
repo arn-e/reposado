@@ -3,50 +3,25 @@ require 'net/https'
 
 module GithubHandler
 
-  OAUTH_TOKEN = "052fa222631a8872903551d0675953361d7810c7"
+  OAUTH_TOKEN = "052fa222631a8872903551d0675953361d7810c7" # move this out - AF
 
   def self.query_github(repo, state, page_num = 1)
     url = "https://api.github.com/repos#{repo}/issues?state=#{state}&page=#{page_num}&per_page=100"
     query_api(url)
   end
 
-  def self.multi_query_github_issue_data(pool, repo_id)
-    list, repo_id = pool, repo_id
+  def self.multi_query_github_issue_data(list)
     EventMachine.run do
       multi = EventMachine::MultiRequest.new
       list.each do |item|
-        repo, issue_number, repo_id = item[1], item[2], item[3]
-        comment_ident, event_ident = "#{item[0]}_comments", "#{item[0]}_events"
-
-        url_comment = "https://api.github.com/repos#{repo}/issues/#{issue_number}/comments?access_token=#{OAUTH_TOKEN}"   
-        url_event = "https://api.github.com/repos#{repo}/issues/#{issue_number}/events?access_token=#{OAUTH_TOKEN}"   
-        
-        multi.add comment_ident, EventMachine::HttpRequest.new(url_comment).get
-        multi.add event_ident, EventMachine::HttpRequest.new(url_event).get
+        multi.add "#{item[0]}_comments", EventMachine::HttpRequest.new("https://api.github.com/repos#{item[1]}/issues/#{item[2]}/comments?access_token=#{OAUTH_TOKEN}").get
+        multi.add "#{item[0]}_events", EventMachine::HttpRequest.new("https://api.github.com/repos#{item[1]}/issues/#{item[2]}/events?access_token=#{OAUTH_TOKEN}").get
       end
       multi.callback do
-        Issue.parsed_multi_response(multi.responses[:callback], repo_id)
-        puts multi.responses[:errback]
+        Issue.parsed_multi_response(multi.responses[:callback], item[3])
         EventMachine.stop
       end
     end
-  end
-
-  def self.query_github_issue_data(repo, issue_number, data_type, issue_id)
-    issue_id = issue_id
-    url = "https://api.github.com/repos#{repo}/issues/#{issue_number}/#{data_type}?access_token=#{OAUTH_TOKEN}"  
-    EventMachine.run {
-      http = EventMachine::HttpRequest.new(url).get
-      http.errback { 
-        p 'Error Callback Reached'
-        EM.stop 
-      }
-      http.callback {
-        response = JSON.parse(http.response)
-        data_type == "comments" ? Issue.new_comment(response, issue_id) : Issue.new_event(response, issue_id)
-        EventMachine.stop
-      }
-    }        
   end
 
   def self.query_github_commits(repo, branch_name, branch_start_sha)
@@ -58,14 +33,12 @@ module GithubHandler
 
   def self.query_github_branches(repo)
     url = "https://api.github.com/repos#{repo}/branches"
-    puts "*********** URL::: #{url}"
     query_api(url)
   end
 
   def self.set_connection_parameters(url, port = 80)
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, port)
-    # What does this stuff mean? What does it do? -LRW
     if port == 443
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
