@@ -16,6 +16,8 @@ class RepositoriesController < ApplicationController
     @valid = false
     repo_url = params[:repo]
     repo_name = URI.parse(repo_url).path # /pengwynn/octokit
+    @repo       = Repository.find_by_url(repo_url)
+    return if @repo
     @repo       = Repository.new
     @repo.url   = repo_url
     @repo.name  = repo_name

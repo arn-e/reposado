@@ -34,7 +34,7 @@ class Repository < ActiveRecord::Base
 
   def valid_github_url
     is_valid = false
-    if (url =~ /https:\/\/github.com\/\w+\/\w+$/)
+    if (url =~ /https:\/\/github.com.*$/)
       uri = URI.parse(url)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -53,7 +53,12 @@ class Repository < ActiveRecord::Base
     open_data         = GithubHandler.query_github(repo_path, "open")
     closed_data       = GithubHandler.query_github(repo_path, "closed")
 
+    return if open_data["message"] == "Issues are disabled for this repo"
+
     open_data.each do |issue|
+      puts
+      p issue
+      puts
       Issue.from_json(issue, repo_id)
     end
 

@@ -40,7 +40,7 @@ var draw_histo = function(json_data){
   b.append("rect")
       .attr("x", function(d,i){return "6em";})
       .attr("y", function(d,i){return 1.2 * em_px * (i + 1);})
-      .attr("height", "0.8em")
+      .attr("height", "1em")
       .attr("width", function(d,i){return scaling * d;})
       .style("fill", function(d, i) { return barcolor(i/nbins); });
 
