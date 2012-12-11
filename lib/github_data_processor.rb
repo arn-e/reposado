@@ -34,7 +34,8 @@ module GithubDataProcessor
     res[:response_times].each do |time| 
       (sum += time) if (time.class == Float || time.class == Fixnum) && time > 0
     end
-    { :average_response_time => (sum / res[:response_times].length) }
+    res[:response_times].length != 0 ? avg = (sum / res[:response_times].length) : avg = 0 
+    { :average_response_time => avg }
   end
   
   def relevant_words(document = [])
