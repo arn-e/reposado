@@ -10,7 +10,7 @@ module GithubHandler
     query_api(url)
   end
 
-  def self.multi_query_github_issue_data(list)
+  def self.multi_query_github_issue_data(list, repo_id)
     EventMachine.run do
       multi = EventMachine::MultiRequest.new
       list.each do |item|
@@ -18,7 +18,7 @@ module GithubHandler
         multi.add "#{item[0]}_events", EventMachine::HttpRequest.new("https://api.github.com/repos#{item[1]}/issues/#{item[2]}/events?access_token=#{OAUTH_TOKEN}").get
       end
       multi.callback do
-        Issue.parsed_multi_response(multi.responses[:callback], item[3])
+        Issue.parsed_multi_response(multi.responses[:callback], repo_id)
         EventMachine.stop
       end
     end

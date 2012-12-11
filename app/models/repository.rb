@@ -82,7 +82,7 @@ class Repository < ActiveRecord::Base
       commit_data = collect_commit_page(repo_path, repo_id, branch_name, branch_start_sha)
       Commit.update_commit_data(commit_data, repo_id, sha_collection) unless commit_data.nil? || commit_data.length < 1
     end
-    
+
   end
 
   def self.list_sha(repo_id,sha_collection = {})

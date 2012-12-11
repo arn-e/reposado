@@ -30,18 +30,19 @@ module GithubDataProcessor
   end
 
   def average_response_time(sum = 0)
-    response_time_for_issues[:response_times].each do |time| 
+    res = response_time_for_issues
+    res[:response_times].each do |time| 
       (sum += time) if (time.class == Float || time.class == Fixnum) && time > 0
     end
     { :average_response_time => (sum / res[:response_times].length) }
   end
   
-  def relevant_words(document = [], combined = Hash.new(0))
+  def relevant_words(document = [])
     issues.each {|issue| document << words_in_issue(issue)}
     commits.each {|commit| document << sanitized(commit.message.downcase.split(' '))}
 
-    combined = highest_scores.sort_by {|key, value| value}
-    { :relevant_words => word_results_formatted.reverse[0...17] }
+    combined = highest_scores(document).sort_by {|key, value| value}
+    { :relevant_words => word_results_formatted(combined).reverse[0...17] }
   end
 
   def collect_data(hashes=[])
@@ -67,7 +68,7 @@ module GithubDataProcessor
     words
   end
 
-  def highest_scores(document)
+  def highest_scores(document, combined = Hash.new(0))
     document.each_slice(50) do |slice|
       TfIdf.new(slice).tf_idf.each do |i|
         i.each do |key, value|
@@ -90,7 +91,7 @@ module GithubDataProcessor
   end
 
   def response_time(issue, event_date, comment_date)
-    return nil (if event_date == nil && comment_date == nil)
+    return nil if (event_date == nil && comment_date == nil)
     if comment_date == nil && event_date != nil
       return (event_date - issue.git_created_at)
     elsif comment_date != nil && event_date == nil
