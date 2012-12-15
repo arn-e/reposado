@@ -1,6 +1,9 @@
 
 body {background-color: #fafafa;}
-#histo {fill: #000;
+#histo {
+  position:relative;
+  left:12%;
+  fill: #000;
   text-anchor: end;
   width: 20em;
   font-family: "Open Sans";
